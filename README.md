@@ -1,6 +1,6 @@
 # MoodMagic Plan
 
-(We should check them off once complete)
+# (We should check them off once complete)
 
 # Core Features include:
   # Sign in / Sign Out
