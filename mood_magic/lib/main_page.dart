@@ -3,7 +3,7 @@ import 'components/my_bottom_nav_bar.dart';
 import 'components/my_drawer.dart';
 import 'pages/home_page.dart';
 import 'pages/profile_page.dart';
-import 'pages/setting_page.dart';
+import 'pages/social_page.dart';
 import 'pages/shop_page.dart';
 
 /*
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
     const ProfilePage(),
 
     // setting page
-    const SettingPage(),
+    const SocialPage(),
   ];
 
   @override
