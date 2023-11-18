@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String _currentUsername = 'JohnDoe'; // Initial username
+  IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +37,10 @@ class ProfilePage extends StatelessWidget {
             buildHelpTabContent(),
 
             // Settings Tab
-            buildSettingsTabContent(context),
+            buildSettingsTabContent(),
 
             // Membership Tab
-            buildMembershipTabContent(context),
+            buildMembershipTabContent(),
           ],
         ),
       ),
@@ -45,40 +54,55 @@ class ProfilePage extends StatelessWidget {
         Center(
           child: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: Container(
-              height: 160,
-              width: 160,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey[200],
-              ),
-              child: Icon(
-                Icons.account_circle,
-                size: 120, // Adjust the size as needed
-                color: Colors.grey[500],
+            child: GestureDetector(
+              onTap: () {
+                // Open the profile picture selection dialog
+                showProfilePictureSelectionDialog(context);
+              },
+              child: Container(
+                height: 160,
+                width: 160,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey[200],
+                ),
+                child: Icon(
+                  _currentProfilePicture,
+                  size: 120, // Adjust the size as needed
+                  color: Colors.grey[500],
+                ),
               ),
             ),
           ),
         ),
 
-        // Change Profile Picture and Username Options
+        // Change Profile Picture Option
         ListTile(
           title: Text('Change Profile Picture'),
           onTap: () {
-            // Add logic to change profile picture
-            // This can open a dialog or navigate to another screen for image selection
-            // For simplicity, you can print a message for now
-            print('Change Profile Picture tapped');
+            // Open the profile picture selection dialog
+            showProfilePictureSelectionDialog(context);
           },
         ),
+
+        // Change Username Option
         ListTile(
           title: Text('Change Username'),
           onTap: () {
-            // Add logic to change username
-            // This can open a dialog or navigate to another screen for username input
-            // For simplicity, you can print a message for now
-            print('Change Username tapped');
+            // Open the username change dialog
+            showChangeUsernameDialog(context);
           },
+        ),
+
+        // Displayed Username
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              _currentUsername,
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
         ),
 
         // Grid of photos or items
@@ -97,9 +121,118 @@ class ProfilePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               color: Colors.grey[200],
             ),
+            child: GestureDetector(
+              onTap: () {
+                // Update the main profile picture with the selected one
+                setState(() {
+                  _currentProfilePicture = getRandomIcon();
+                });
+              },
+              child: Icon(
+                getRandomIcon(),
+                size: 80,
+                color: Colors.grey[500],
+              ),
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  void showProfilePictureSelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Profile Picture'),
+          content: Container(
+            width: double.maxFinite,
+            height: 300,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+              ),
+              itemCount: 9,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    // Update the main profile picture with the selected one
+                    setState(() {
+                      _currentProfilePicture = getRandomIcon();
+                    });
+                    Navigator.pop(context); // Close the dialog
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey[200],
+                    ),
+                    child: Icon(
+                      getRandomIcon(),
+                      size: 60,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  IconData getRandomIcon() {
+    final List<IconData> icons = [
+      Icons.face,
+      Icons.pets,
+      Icons.accessibility,
+      Icons.star,
+      Icons.favorite,
+      Icons.cake,
+      Icons.school,
+      Icons.work,
+      Icons.food_bank,
+    ];
+    final Random random = Random();
+    return icons[random.nextInt(icons.length)];
+  }
+
+  void showChangeUsernameDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newUsername = _currentUsername;
+        return AlertDialog(
+          title: Text('Change Username'),
+          content: TextField(
+            decoration: InputDecoration(labelText: 'New Username'),
+            onChanged: (value) {
+              newUsername = value;
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the displayed username
+                setState(() {
+                  _currentUsername = newUsername;
+                });
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -154,7 +287,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget buildSettingsTabContent(BuildContext context) {
+  Widget buildSettingsTabContent() {
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -200,7 +333,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget buildMembershipTabContent(BuildContext context) {
+  Widget buildMembershipTabContent() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -231,7 +364,6 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
   void showPurchaseConfirmation(BuildContext context) {
     showDialog(
       context: context,
