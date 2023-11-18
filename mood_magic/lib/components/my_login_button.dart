@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/*
+
+B U T T O N
+
+This is a custom built sign in button!
+
+*/
+
 class MyButton extends StatelessWidget {
   final Function()? onTap;
 

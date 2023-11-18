@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.modernlogintute">
+    package="com.example.startertemplate">
    <application
-        android:label="modernlogintute"
+        android:label="startertemplate"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
