@@ -1,4 +1,4 @@
-package com.example.mood_magic
+package com.example.modernlogintute
 
 import io.flutter.embedding.android.FlutterActivity
 
