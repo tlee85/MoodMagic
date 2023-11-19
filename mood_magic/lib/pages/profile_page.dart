@@ -18,17 +18,23 @@ class _ProfilePageState extends State<ProfilePage> {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          
           title: Text('Profile'),
+          
           bottom: TabBar(
+            
             tabs: [
               Tab(text: 'Account'),
               Tab(text: 'Help'),
               Tab(text: 'Settings'),
               Tab(text: 'Membership'),
+              
             ],
+            indicatorColor: Colors.white,
           ),
         ),
         body: TabBarView(
+          
           children: [
             // Account Tab
             buildAccountTabContent(),
@@ -42,19 +48,23 @@ class _ProfilePageState extends State<ProfilePage> {
             // Membership Tab
             buildMembershipTabContent(),
           ],
+          
         ),
       ),
     );
   }
 
+
   Widget buildAccountTabContent() {
-    return ListView(
-      children: [
-        // Profile Picture Section
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: GestureDetector(
+  return ListView(
+    children: [
+      // Profile Picture and Name Section
+      Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
               onTap: () {
                 // Open the profile picture selection dialog
                 showProfilePictureSelectionDialog(context);
@@ -68,77 +78,91 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 child: Icon(
                   _currentProfilePicture,
-                  size: 120, // Adjust the size as needed
+                  size: 120,
                   color: Colors.grey[500],
                 ),
               ),
             ),
-          ),
-        ),
-
-        // Change Profile Picture Option
-        ListTile(
-          title: Text('Change Profile Picture'),
-          onTap: () {
-            // Open the profile picture selection dialog
-            showProfilePictureSelectionDialog(context);
-          },
-        ),
-
-        // Change Username Option
-        ListTile(
-          title: Text('Change Username'),
-          onTap: () {
-            // Open the username change dialog
-            showChangeUsernameDialog(context);
-          },
-        ),
-
-        // Displayed Username
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              _currentUsername,
-              style: TextStyle(fontSize: 18),
+            SizedBox(width: 20),
+            Column(
+              children: [
+                Text(
+                  _currentUsername,
+                  style: TextStyle(fontSize: 18),
+                ),
+                // Additional information or buttons can be added here
+              ],
             ),
-          ),
+          ],
         ),
+      ),
 
-        // Grid of photos or items
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: 10,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-          ),
-          itemBuilder: (context, index) => Container(
-            height: 200,
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: Colors.grey[200],
-            ),
-            child: GestureDetector(
-              onTap: () {
-                // Update the main profile picture with the selected one
-                setState(() {
-                  _currentProfilePicture = getRandomIcon();
-                });
-              },
-              child: Icon(
-                getRandomIcon(),
-                size: 80,
-                color: Colors.grey[500],
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      // Change Profile Picture Option
+      _buildOptionButton(
+        title: 'Change Profile Picture',
+        onPressed: () {
+          // Open the profile picture selection dialog
+          showProfilePictureSelectionDialog(context);
+        },
+      ),
+
+      // Change Username Option
+      _buildOptionButton(
+        title: 'Change Username',
+        onPressed: () {
+          // Open the username change dialog
+          showChangeUsernameDialog(context);
+        },
+      ),
+
+      // Additional options
+      _buildOptionButton(
+        title: 'Edit Bio',
+        onPressed: () {
+          // Add logic to handle bio editing
+          print('Edit Bio tapped');
+        },
+      ),
+      _buildOptionButton(
+        title: 'Change Email',
+        onPressed: () {
+          // Add logic to handle email change
+          print('Change Email tapped');
+        },
+      ),
+      _buildOptionButton(
+        title: 'Change Password',
+        onPressed: () {
+          // Add logic to handle password change
+          print('Change Password tapped');
+        },
+      ),
+    ],
+  );
+}
+
+Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    style: ElevatedButton.styleFrom(
+      primary: Colors.white,
+      onPrimary: Colors.black,
+      elevation: 5, // Add a drop shadow effect
+      padding: EdgeInsets.zero, // Set padding to zero
+    ),
+    child: Container(
+      padding: EdgeInsets.all(16), // Add padding inside the button content
+      alignment: Alignment.centerLeft, // Align text to the left
+      child: Text(
+        title,
+        style: TextStyle(fontSize: 16),
+        textAlign: TextAlign.left, // Align text to the left
+      ),
+    ),
+  );
+}
+
+
 
   void showProfilePictureSelectionDialog(BuildContext context) {
     showDialog(
@@ -156,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
               itemCount: 9,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () {
+                  onTap: () { 
                     // Update the main profile picture with the selected one
                     setState(() {
                       _currentProfilePicture = getRandomIcon();

@@ -4,7 +4,7 @@ import 'components/my_drawer.dart';
 import 'pages/home_page.dart';
 import 'pages/profile_page.dart';
 import 'pages/social_page.dart';
-import 'pages/shop_page.dart';
+import 'pages/calendar.dart';
 
 /*
 
@@ -64,7 +64,7 @@ class _MainPageState extends State<MainPage> {
 
     */
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -78,8 +78,8 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         title: Text(
-          'A P P',
-          style: TextStyle(color: Colors.grey.shade800),
+          'Mood Magic',
+          style: TextStyle(color: Colors.white),
         ),
       ),
       drawer: const MyDrawer(),
