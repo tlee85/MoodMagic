@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SocialPage extends StatelessWidget {
   const SocialPage({Key? key});
@@ -12,8 +13,7 @@ class SocialPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView.builder(
           itemCount: 10,
-          itemBuilder: (context, index) =>
-              buildSocialListItem(context, index),
+          itemBuilder: (context, index) => buildSocialListItem(context, index),
         ),
       ),
     );
@@ -145,8 +145,31 @@ class MessageThreadPage extends StatefulWidget {
 
 class _MessageThreadPageState extends State<MessageThreadPage> {
   List<String> messages = [];
+  late SharedPreferences prefs;
 
   final TextEditingController _messageController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    initSharedPreferences();
+  }
+
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    loadMessages();
+  }
+
+  Future<void> loadMessages() async {
+    List<String> savedMessages = prefs.getStringList('messages_${widget.username}') ?? [];
+    setState(() {
+      messages = savedMessages;
+    });
+  }
+
+  Future<void> saveMessages() async {
+    await prefs.setStringList('messages_${widget.username}', messages);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +214,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
               child: ListView.builder(
                 reverse: true,
                 itemCount: messages.length,
-                itemBuilder: (context, index) => buildMessageBubble(messages[index]),
+                itemBuilder: (context, index) => buildMessageBubble(index),
               ),
             ),
           ),
@@ -229,7 +252,10 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
     );
   }
 
-  Widget buildMessageBubble(String message) {
+  Widget buildMessageBubble(int index) {
+    String message = messages[index];
+    bool isMe = message.startsWith('Me:');
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       padding: const EdgeInsets.all(12),
@@ -245,13 +271,58 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
           ),
         ],
       ),
-      child: Text(message),
+      child: Row(
+        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        children: [
+          if (!isMe)
+            // Profile Picture for received messages
+            Container(
+              width: 30,
+              height: 30,
+              margin: const EdgeInsets.only(right: 8),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.blueGrey[100],
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2.0,
+                ),
+              ),
+              child: Icon(
+                widget.profileIcon,
+                size: 15,
+                color: Colors.blueGrey[700],
+              ),
+            ),
+          Text(message),
+        ],
+      ),
     );
   }
 
   void sendMessage(String message) {
     setState(() {
-      messages.insert(0, message);
+      messages.insert(0, 'Me: $message');
+      // Generate and add a random response
+      String randomResponse = generateRandomResponse();
+      messages.insert(0, '${widget.username}: $randomResponse');
+      saveMessages();
     });
+  }
+
+  String generateRandomResponse() {
+    List<String> responses = [
+      'Hello!',
+      'How are you?',
+      'Nice to meet you!',
+      'What\'s up?',
+      'Tell me more!',
+      'I like that!',
+      'Interesting...',
+    ];
+
+    final Random random = Random();
+    int randomIndex = random.nextInt(responses.length);
+    return responses[randomIndex];
   }
 }
