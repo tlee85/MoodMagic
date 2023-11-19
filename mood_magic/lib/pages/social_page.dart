@@ -7,7 +7,7 @@ class SocialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView.builder(
@@ -39,49 +39,64 @@ class SocialPage extends StatelessWidget {
         height: 100,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
         child: Row(
           children: [
             // Profile Picture
             Container(
-              width: 80,
-              height: 80,
+              width: 60,
+              height: 60,
               margin: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.blueGrey[100],
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2.0,
+                ),
               ),
               child: Icon(
                 randomIcon,
-                size: 40,
+                size: 30,
                 color: Colors.blueGrey[700],
               ),
             ),
 
             // User Info
             Expanded(
-              child: Stack(
-                children: [
-                  // Overlay: Username
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      color: Colors.black.withOpacity(0.5),
-                      child: Text(
-                        username,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      username,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: 4),
+                    Text(
+                      'Tap to chat',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -147,6 +162,10 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.blueGrey[100],
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2.0,
+                ),
               ),
               child: Icon(
                 widget.profileIcon,
@@ -167,18 +186,20 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
         children: [
           // Message List
           Expanded(
-            child: ListView.builder(
-              itemCount: messages.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(messages[index]),
-                // You can also show the sender's name or other details here
+            child: Container(
+              color: Colors.grey[200],
+              child: ListView.builder(
+                reverse: true,
+                itemCount: messages.length,
+                itemBuilder: (context, index) => buildMessageBubble(messages[index]),
               ),
             ),
           ),
 
           // Message Input and Send Button
-          Padding(
+          Container(
             padding: const EdgeInsets.all(8.0),
+            color: Colors.white,
             child: Row(
               children: [
                 Expanded(
@@ -208,9 +229,29 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
     );
   }
 
+  Widget buildMessageBubble(String message) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Text(message),
+    );
+  }
+
   void sendMessage(String message) {
     setState(() {
-      messages.add(message);
+      messages.insert(0, message);
     });
   }
 }
