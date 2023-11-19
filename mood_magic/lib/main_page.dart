@@ -4,7 +4,8 @@ import 'components/my_drawer.dart';
 import 'pages/home_page.dart';
 import 'pages/profile_page.dart';
 import 'pages/social_page.dart';
-import 'pages/calendar.dart';
+import 'pages/calendar_page.dart';
+
 
 /*
 
@@ -46,7 +47,7 @@ class _MainPageState extends State<MainPage> {
     const HomePage(),
 
     // shop page
-    const ShopPage(),
+    const CalendarPage(),
 
     // profile page
     const ProfilePage(),
