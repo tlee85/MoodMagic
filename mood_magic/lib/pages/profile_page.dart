@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -13,29 +12,26 @@ class _ProfilePageState extends State<ProfilePage> {
   String _currentUsername = 'JohnDoe'; // Initial username
   IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
 
+  String _currentEmail = 'john.doe@example.com'; // Initial email
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          
           title: Text('Profile'),
-          
           bottom: TabBar(
-            
             tabs: [
               Tab(text: 'Account'),
               Tab(text: 'Help'),
               Tab(text: 'Settings'),
               Tab(text: 'Membership'),
-              
             ],
             indicatorColor: Colors.white,
           ),
         ),
         body: TabBarView(
-          
           children: [
             // Account Tab
             buildAccountTabContent(),
@@ -49,121 +45,112 @@ class _ProfilePageState extends State<ProfilePage> {
             // Membership Tab
             buildMembershipTabContent(),
           ],
-          
         ),
       ),
     );
   }
 
-
   Widget buildAccountTabContent() {
-  return ListView(
-    children: [
-      // Profile Picture and Name Section
-      Padding(
-        padding: const EdgeInsets.all(25.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            GestureDetector(
-              onTap: () {
-                // Open the profile picture selection dialog
-                showProfilePictureSelectionDialog(context);
-              },
-              child: Container(
-                height: 160,
-                width: 160,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.grey[200],
-                ),
-                child: Icon(
-                  _currentProfilePicture,
-                  size: 120,
-                  color: Colors.grey[500],
+    return ListView(
+      children: [
+        // Profile Picture and Name Section
+        Padding(
+          padding: const EdgeInsets.all(25.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // Open the profile picture selection dialog
+                  showProfilePictureSelectionDialog(context);
+                },
+                child: Container(
+                  height: 160,
+                  width: 160,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey[200],
+                  ),
+                  child: Icon(
+                    _currentProfilePicture,
+                    size: 120,
+                    color: Colors.grey[500],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 20),
-            Column(
-              children: [
-                Text(
-                  _currentUsername,
-                  style: TextStyle(fontSize: 18),
-                ),
-                // Additional information or buttons can be added here
-              ],
-            ),
-          ],
+              SizedBox(width: 20),
+              Column(
+                children: [
+                  Text(
+                    _currentUsername,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  // Additional information or buttons can be added here
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        // Change Profile Picture Option
+        _buildOptionButton(
+          title: 'Change Profile Picture',
+          onPressed: () {
+            // Open the profile picture selection dialog
+            showProfilePictureSelectionDialog(context);
+          },
+        ),
+
+        // Change Username Option
+        _buildOptionButton(
+          title: 'Change Username',
+          onPressed: () {
+            // Open the username change dialog
+            showChangeUsernameDialog(context);
+          },
+        ),
+
+        // Change Email Option
+        _buildOptionButton(
+          title: 'Change Email',
+          onPressed: () {
+            // Open the email change dialog
+            showChangeEmailDialog(context);
+          },
+        ),
+
+        // Change Password Option
+        _buildOptionButton(
+          title: 'Change Password',
+          onPressed: () {
+            // Open the password change dialog
+            showChangePasswordDialog(context);
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        primary: Colors.white,
+        onPrimary: Colors.black,
+        elevation: 5, // Add a drop shadow effect
+        padding: EdgeInsets.zero, // Set padding to zero
+      ),
+      child: Container(
+        padding: EdgeInsets.all(16), // Add padding inside the button content
+        alignment: Alignment.centerLeft, // Align text to the left
+        child: Text(
+          title,
+          style: TextStyle(fontSize: 16),
+          textAlign: TextAlign.left, // Align text to the left
         ),
       ),
-
-      // Change Profile Picture Option
-      _buildOptionButton(
-        title: 'Change Profile Picture',
-        onPressed: () {
-          // Open the profile picture selection dialog
-          showProfilePictureSelectionDialog(context);
-        },
-      ),
-
-      // Change Username Option
-      _buildOptionButton(
-        title: 'Change Username',
-        onPressed: () {
-          // Open the username change dialog
-          showChangeUsernameDialog(context);
-        },
-      ),
-
-      // Additional options
-      _buildOptionButton(
-        title: 'Edit Bio',
-        onPressed: () {
-          // Add logic to handle bio editing
-          print('Edit Bio tapped');
-        },
-      ),
-      _buildOptionButton(
-        title: 'Change Email',
-        onPressed: () {
-          // Add logic to handle email change
-          print('Change Email tapped');
-        },
-      ),
-      _buildOptionButton(
-        title: 'Change Password',
-        onPressed: () {
-          // Add logic to handle password change
-          print('Change Password tapped');
-        },
-      ),
-    ],
-  );
-}
-
-Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
-  return ElevatedButton(
-    onPressed: onPressed,
-    style: ElevatedButton.styleFrom(
-      primary: Colors.white,
-      onPrimary: Colors.black,
-      elevation: 5, // Add a drop shadow effect
-      padding: EdgeInsets.zero, // Set padding to zero
-    ),
-    child: Container(
-      padding: EdgeInsets.all(16), // Add padding inside the button content
-      alignment: Alignment.centerLeft, // Align text to the left
-      child: Text(
-        title,
-        style: TextStyle(fontSize: 16),
-        textAlign: TextAlign.left, // Align text to the left
-      ),
-    ),
-  );
-}
-
-
+    );
+  }
 
   void showProfilePictureSelectionDialog(BuildContext context) {
     showDialog(
@@ -181,7 +168,7 @@ Widget _buildOptionButton({required String title, required VoidCallback onPresse
               itemCount: 9,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () { 
+                  onTap: () {
                     // Update the main profile picture with the selected one
                     setState(() {
                       _currentProfilePicture = getRandomIcon();
@@ -259,6 +246,47 @@ Widget _buildOptionButton({required String title, required VoidCallback onPresse
         );
       },
     );
+  }
+
+  void showChangeEmailDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newEmail = _currentEmail;
+        return AlertDialog(
+          title: Text('Change Email'),
+          content: TextField(
+            decoration: InputDecoration(labelText: 'New Email'),
+            onChanged: (value) {
+              newEmail = value;
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the displayed email
+                setState(() {
+                  _currentEmail = newEmail;
+                });
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showChangePasswordDialog(BuildContext context) {
+    // Implement the password change dialog logic here
+    print('Change Password tapped');
   }
 
   Widget buildHelpTabContent() {
