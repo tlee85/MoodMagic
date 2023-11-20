@@ -13,49 +13,52 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // + Icon
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    // Open the journal page
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => JournalPage()));
-                  },
-                ),
+              // Timer Icon (Aligned evenly with the journal icon)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.timer),
+                    onPressed: () {
+                      // Add logic to set a timer for meditation
+                      _showTimerDialog(context);
+                    },
+                    color: Colors.black,
+                  ),
+                  // + Icon (Moved to the top right)
+                  IconButton(
+                    icon: Icon(Icons.add),
+                    onPressed: () {
+                      // Open the journal page
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => JournalPage()));
+                    },
+                    color: Colors.black,
+                  ),
+                ],
               ),
 
               // Current Mood
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.purpleAccent,
-                ),
+              buildCard(
                 child: Text(
                   'Current Mood: Happy',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
+
               SizedBox(height: 12),
 
               // Daily Quote
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.purpleAccent,
-                ),
+              buildCard(
                 child: Text(
                   '"Stay positive, work hard, make it happen."',
                   style: TextStyle(
                     fontSize: 16,
                     fontStyle: FontStyle.italic,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -186,18 +189,12 @@ class HomePage extends StatelessWidget {
 
               // Mood Tracker
               buildSectionTitle('Mood Tracker'),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.purpleAccent,
-                ),
-                // Add mood tracker UI here
+              buildCard(
                 child: Text(
                   'Track your mood over time.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -206,18 +203,12 @@ class HomePage extends StatelessWidget {
 
               // Affirmations
               buildSectionTitle('Affirmations'),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.purpleAccent,
-                ),
-                // Add affirmations UI here
+              buildCard(
                 child: Text(
                   'Positive affirmations for you.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -226,18 +217,12 @@ class HomePage extends StatelessWidget {
 
               // Mindfulness Exercises
               buildSectionTitle('Mindfulness Exercises'),
-              Container(
-                padding: EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.purpleAccent,
-                ),
-                // Add mindfulness exercises UI here
+              buildCard(
                 child: Text(
                   'Quick exercises to relax and de-stress.',
                   style: TextStyle(
                     fontSize: 16,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
@@ -258,11 +243,15 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              colors: [Colors.purpleAccent, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+            color: Colors.white,
           ),
           child: Text(
             '$category Recommendations',
@@ -278,11 +267,15 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.all(16),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              colors: [Colors.purpleAccent, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
+            color: Colors.white,
           ),
           child: Column(
             children: [
@@ -329,6 +322,14 @@ class HomePage extends StatelessWidget {
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
         gradient: LinearGradient(
           colors: [Colors.purpleAccent, Colors.white],
           begin: Alignment.topCenter,
@@ -342,6 +343,86 @@ class HomePage extends StatelessWidget {
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
+      ),
+    );
+  }
+
+  Widget buildCard({required Widget child}) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 8),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: child,
+      ),
+    );
+  }
+
+  void _showTimerDialog(BuildContext context) {
+    int selectedTime = 5; // Default time in minutes
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Set Meditation Timer'),
+        content: Column(
+          children: [
+            Text('Select time in minutes:'),
+            SizedBox(height: 10),
+            DropdownButton<int>(
+              value: selectedTime,
+              items: List.generate(
+                31,
+                (index) => DropdownMenuItem(
+                  value: index,
+                  child: Text('$index'),
+                ),
+              ),
+              onChanged: (value) {
+                if (value != null) {
+                  selectedTime = value;
+                }
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _startMeditationTimer(context, selectedTime);
+            },
+            child: Text('Start'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _startMeditationTimer(BuildContext context, int minutes) async {
+    await Future.delayed(Duration(minutes: minutes));
+
+    // Show congratulations popup
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Congratulations!'),
+        content: Text('You have completed your meditation session.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('OK'),
+          ),
+        ],
       ),
     );
   }
@@ -374,15 +455,84 @@ class JournalPage extends StatelessWidget {
 
             SizedBox(height: 20),
 
-            // Timer Icon
+            // Timer Icon (Moved to the top left)
             IconButton(
               icon: Icon(Icons.timer),
               onPressed: () {
                 // Add logic to set a timer for meditation
+                _showTimerDialog(context);
               },
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showTimerDialog(BuildContext context) {
+    int selectedTime = 5; // Default time in minutes
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Set Meditation Timer'),
+        content: Column(
+          children: [
+            Text('Select time in minutes:'),
+            SizedBox(height: 10),
+            DropdownButton<int>(
+              value: selectedTime,
+              items: List.generate(
+                31,
+                (index) => DropdownMenuItem(
+                  value: index,
+                  child: Text('$index'),
+                ),
+              ),
+              onChanged: (value) {
+                if (value != null) {
+                  selectedTime = value;
+                }
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              _startMeditationTimer(context, selectedTime);
+            },
+            child: Text('Start'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _startMeditationTimer(BuildContext context, int minutes) async {
+    await Future.delayed(Duration(minutes: minutes));
+
+    // Show congratulations popup
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Congratulations!'),
+        content: Text('You have completed your meditation session.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('OK'),
+          ),
+        ],
       ),
     );
   }
