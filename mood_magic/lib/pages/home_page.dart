@@ -392,6 +392,8 @@ class JournalPage extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'Write your thoughts here...',
                     border: OutlineInputBorder(),
+                    filled: true,  // Added to fill the background
+                    fillColor: Colors.white,  // Set background color to white
                   ),
                 ),
               ),
