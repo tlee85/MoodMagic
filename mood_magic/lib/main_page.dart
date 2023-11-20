@@ -6,7 +6,6 @@ import 'pages/profile_page.dart';
 import 'pages/social_page.dart';
 import 'pages/calendar_page.dart';
 
-
 /*
 
 M A I N P A G E
@@ -59,9 +58,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     /*
-
-    UI - I like a more minimal style so that's what I did here, 
-    but you can change up the colors and decorate it to your preference
 
     */
     return Scaffold(
