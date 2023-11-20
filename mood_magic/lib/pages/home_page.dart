@@ -60,25 +60,37 @@ class _HomePageState extends State<HomePage> {
               ),
               buildCard(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Current Mood: ',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: _showMoodSelectionDialog,
-                      child: Text(
-                        currentMood,
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue, // Change color as needed
+                    Row(
+                      children: [
+                        Text(
+                          'Current Mood: ',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: _showMoodSelectionDialog,
+                          child: Text(
+                            currentMood,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(139, 76, 252, 50), // Change color as needed
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                       
+                        SizedBox(width: 8),
+                        Icon(Icons.edit, size: 24, color: Colors.purple), // Use the 'edit' icon
+                      ],
                     ),
                   ],
                 ),
@@ -105,6 +117,22 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+
+  IconData getMoodIcon(String mood) {
+    switch (mood) {
+      case '😊':
+        return Icons.sentiment_very_satisfied;
+      case '😢':
+        return Icons.sentiment_very_dissatisfied;
+      case '😎':
+        return Icons.sentiment_satisfied;
+      case '😡':
+        return Icons.sentiment_dissatisfied;
+      default:
+        return Icons.sentiment_neutral;
+    }
   }
 
   Widget buildRecommendationSection(String category, List<Recommendation> recommendations) {
@@ -197,7 +225,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
   void _showTimerDialog(BuildContext context) {
     int selectedTime = 5;
 
