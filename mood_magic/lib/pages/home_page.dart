@@ -43,7 +43,7 @@ class HomePage extends StatelessWidget {
               // Current Mood
               buildCard(
                 child: Text(
-                  'Current Mood: Happy',
+                  'Current Mood: 😊',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -367,7 +367,7 @@ class JournalPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Journal'),
-        backgroundColor: Colors.purple, // Set tab color to purple
+        backgroundColor: Color.fromRGBO(139, 76, 252, 50), // Set tab color to purple
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
