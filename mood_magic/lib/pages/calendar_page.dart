@@ -14,6 +14,15 @@ class _CalendarPageState extends State<CalendarPage> {
   late DateTime _focusedDay;
   late DateTime _selectedDay;
   late SharedPreferences _prefs;
+  int _selectedMoodIndex = 0; // Index for the selected mood emoji
+
+  final List<String> moodEmojis = ['😊', '😢', '😡', '😎']; // Sample mood emojis
+  final List<Color> moodColors = [
+    Colors.green, // Happy
+    Colors.blue, // Sad
+    Colors.red, // Angry
+    Colors.orange, // Cool
+  ]; // Sample mood colors
 
   @override
   void initState() {
@@ -27,6 +36,7 @@ class _CalendarPageState extends State<CalendarPage> {
       setState(() {
         _prefs = prefs;
         _selectedDay = DateTime.parse(_prefs.getString('selectedDay') ?? '');
+        _selectedMoodIndex = _prefs.getInt('selectedMoodIndex') ?? 0;
       });
     });
   }
@@ -39,6 +49,40 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
       body: Column(
         children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                // Display selected mood circle
+                Container(
+                  width: 20,
+                  height: 20,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: moodColors[_selectedMoodIndex],
+                  ),
+                ),
+                SizedBox(width: 8),
+                // Emoji selection arrow buttons
+                IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    _selectPreviousMood();
+                  },
+                ),
+                Text(
+                  moodEmojis[_selectedMoodIndex],
+                  style: TextStyle(fontSize: 20),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward),
+                  onPressed: () {
+                    _selectNextMood();
+                  },
+                ),
+              ],
+            ),
+          ),
           TableCalendar(
             firstDay: DateTime.utc(2023, 1, 1),
             lastDay: DateTime.utc(2023, 12, 31),
@@ -68,6 +112,20 @@ class _CalendarPageState extends State<CalendarPage> {
         ],
       ),
     );
+  }
+
+  void _selectPreviousMood() {
+    setState(() {
+      _selectedMoodIndex = (_selectedMoodIndex - 1) % moodEmojis.length;
+      _prefs.setInt('selectedMoodIndex', _selectedMoodIndex);
+    });
+  }
+
+  void _selectNextMood() {
+    setState(() {
+      _selectedMoodIndex = (_selectedMoodIndex + 1) % moodEmojis.length;
+      _prefs.setInt('selectedMoodIndex', _selectedMoodIndex);
+    });
   }
 }
 

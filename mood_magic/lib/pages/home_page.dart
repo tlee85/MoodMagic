@@ -30,7 +30,10 @@ class HomePage extends StatelessWidget {
                     icon: Icon(Icons.add),
                     onPressed: () {
                       // Open the journal page
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => JournalPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => JournalPage()),
+                      );
                     },
                     color: Colors.black,
                   ),
@@ -185,48 +188,6 @@ class HomePage extends StatelessWidget {
                 ),
               ]),
 
-              SizedBox(height: 20),
-
-              // Mood Tracker
-              buildSectionTitle('Mood Tracker'),
-              buildCard(
-                child: Text(
-                  'Track your mood over time.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 20),
-
-              // Affirmations
-              buildSectionTitle('Affirmations'),
-              buildCard(
-                child: Text(
-                  'Positive affirmations for you.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
-              SizedBox(height: 20),
-
-              // Mindfulness Exercises
-              buildSectionTitle('Mindfulness Exercises'),
-              buildCard(
-                child: Text(
-                  'Quick exercises to relax and de-stress.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-
               // ... Add more sections as needed
             ],
           ),
@@ -314,36 +275,6 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget buildSectionTitle(String title) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-        gradient: LinearGradient(
-          colors: [Colors.purpleAccent, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize: 22,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
-      ),
     );
   }
 
@@ -436,6 +367,7 @@ class JournalPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Journal'),
+        backgroundColor: Colors.purple, // Set tab color to purple
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -443,12 +375,24 @@ class JournalPage extends StatelessWidget {
           children: [
             // Journal Content
             Expanded(
-              child: TextField(
-                maxLines: null,
-                expands: true,
-                decoration: InputDecoration(
-                  hintText: 'Write your thoughts here...',
-                  border: OutlineInputBorder(),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  maxLines: null,
+                  expands: true,
+                  decoration: InputDecoration(
+                    hintText: 'Write your thoughts here...',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
             ),
