@@ -166,6 +166,7 @@ class FriendsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Friends'),
+        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       ),
       body: Center(
         child: Text('Friends Page Content'),
