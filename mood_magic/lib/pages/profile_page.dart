@@ -13,7 +13,8 @@ class _ProfilePageState extends State<ProfilePage> {
   late SharedPreferences _prefs;
 
   String _currentUsername = 'JohnDoe'; // Initial username
-  IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
+  IconData _currentProfilePicture =
+      Icons.account_circle; // Initial profile picture
   String _currentEmail = 'john.doe@example.com'; // Initial email
 
   @override
@@ -26,8 +27,9 @@ class _ProfilePageState extends State<ProfilePage> {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentUsername = _prefs.getString('username') ?? 'JohnDoe';
-      _currentProfilePicture =
-          IconData(_prefs.getInt('profilePicture') ?? Icons.account_circle.codePoint, fontFamily: 'MaterialIcons');
+      _currentProfilePicture = IconData(
+          _prefs.getInt('profilePicture') ?? Icons.account_circle.codePoint,
+          fontFamily: 'MaterialIcons');
       _currentEmail = _prefs.getString('email') ?? 'john.doe@example.com';
     });
   }
@@ -75,90 +77,90 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildAccountTabContent() {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        // Profile Picture and Name Section
-        Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Open the profile picture selection dialog
-                  showProfilePictureSelectionDialog(context);
-                },
-                child: Container(
-                  height: 160,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[200],
-                  ),
-                  child: Icon(
-                    _currentProfilePicture,
-                    size: 120,
-                    color: Colors.grey[500],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Profile Picture and Name Section
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Open the profile picture selection dialog
+                    showProfilePictureSelectionDialog(context);
+                  },
+                  child: Container(
+                    height: 160,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[200],
+                    ),
+                    child: Icon(
+                      _currentProfilePicture,
+                      size: 120,
+                      color: Colors.grey[500],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 20),
-              Column(
-                children: [
-                  Text(
-                    _currentUsername,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  // Additional information or buttons can be added here
-                ],
-              ),
-            ],
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    Text(
+                      _currentUsername,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    // Additional information or buttons can be added here
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
 
-        // Change Profile Picture Option
-        _buildOptionButton(
-          title: 'Change Profile Picture',
-          onPressed: () {
-            // Open the profile picture selection dialog
-            showProfilePictureSelectionDialog(context);
-          },
-        ),
+          // Change Profile Picture Option
+          _buildOptionButton(
+            title: 'Change Profile Picture',
+            onPressed: () {
+              // Open the profile picture selection dialog
+              showProfilePictureSelectionDialog(context);
+            },
+          ),
 
-        // Change Username Option
-        _buildOptionButton(
-          title: 'Change Username',
-          onPressed: () {
-            // Open the username change dialog
-            showChangeUsernameDialog(context);
-          },
-        ),
+          // Change Username Option
+          _buildOptionButton(
+            title: 'Change Username',
+            onPressed: () {
+              // Open the username change dialog
+              showChangeUsernameDialog(context);
+            },
+          ),
 
-        // Change Email Option
-        _buildOptionButton(
-          title: 'Change Email',
-          onPressed: () {
-            // Open the email change dialog
-            showChangeEmailDialog(context);
-          },
-        ),
+          // Change Email Option
+          _buildOptionButton(
+            title: 'Change Email',
+            onPressed: () {
+              // Open the email change dialog
+              showChangeEmailDialog(context);
+            },
+          ),
 
-        // Change Password Option
-        _buildOptionButton(
-          title: 'Change Password',
-          onPressed: () {
-            // Open the password change dialog
-            showChangePasswordDialog(context);
-          },
-        ),
-      ],
-    ),
-  );
-}
+          // Change Password Option
+          _buildOptionButton(
+            title: 'Change Password',
+            onPressed: () {
+              // Open the password change dialog
+              showChangePasswordDialog(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-
-  Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
+  Widget _buildOptionButton(
+      {required String title, required VoidCallback onPressed}) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -224,6 +226,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  int _currentIndex = 0;
+
   IconData getRandomIcon() {
     final List<IconData> icons = [
       Icons.face,
@@ -236,47 +240,52 @@ class _ProfilePageState extends State<ProfilePage> {
       Icons.work,
       Icons.food_bank,
     ];
-    final Random random = Random();
-    return icons[random.nextInt(icons.length)];
+
+    if (_currentIndex >= icons.length) {
+      _currentIndex = 0;
+    }
+
+    IconData nextIcon = icons[_currentIndex];
+    _currentIndex++;
+    return nextIcon;
   }
 
   void showChangeUsernameDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      String newUsername = _currentUsername;
-      return AlertDialog(
-        title: Text('Change Username'),
-        content: TextField(
-          decoration: InputDecoration(labelText: 'New Username'),
-          onChanged: (value) {
-            newUsername = value;
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Close the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newUsername = _currentUsername;
+        return AlertDialog(
+          title: Text('Change Username'),
+          content: TextField(
+            decoration: InputDecoration(labelText: 'New Username'),
+            onChanged: (value) {
+              newUsername = value;
             },
-            child: Text('Cancel'),
           ),
-          TextButton(
-            onPressed: () {
-              // Update the displayed username
-              setState(() {
-                _currentUsername = newUsername;
-              });
-              _saveUserData(); // Save the updated user data
-              Navigator.pop(context); // Close the dialog
-            },
-            child: Text('Save'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the displayed username
+                setState(() {
+                  _currentUsername = newUsername;
+                });
+                _saveUserData(); // Save the updated user data
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void showChangeEmailDialog(BuildContext context) {
     showDialog(
@@ -386,7 +395,8 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Notifications'),
           subtitle: Text('Receive alerts and updates'),
           trailing: Switch(
-            value: true, // Placeholder value, you should use a variable to control the state
+            value:
+                true, // Placeholder value, you should use a variable to control the state
             onChanged: (value) {
               // Add logic to handle notification setting change
               print('Notifications switched: $value');
@@ -397,7 +407,8 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Dark Mode'),
           subtitle: Text('Enable or disable dark mode'),
           trailing: Switch(
-            value: true, // Placeholder value, you should use a variable to control the state
+            value:
+                true, // Placeholder value, you should use a variable to control the state
             onChanged: (value) {
               // Add logic to handle dark mode setting change
               print('Dark Mode switched: $value');
@@ -447,13 +458,15 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
   void showPurchaseConfirmation(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Purchase'),
-          content: Text('Are you sure you want to upgrade to Magic+ for \$5 a month?'),
+          content: Text(
+              'Are you sure you want to upgrade to Magic+ for \$5 a month?'),
           actions: [
             TextButton(
               onPressed: () {

@@ -27,6 +27,7 @@ dependencies:
   provider: ^6.1.1
   table_calendar: ^3.0.9
   shared_preferences: ^2.2.2
+  introduction_screen: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
