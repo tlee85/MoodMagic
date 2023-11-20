@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -9,10 +10,33 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late SharedPreferences _prefs;
+
   String _currentUsername = 'JohnDoe'; // Initial username
   IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
-
   String _currentEmail = 'john.doe@example.com'; // Initial email
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    _prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _currentUsername = _prefs.getString('username') ?? 'JohnDoe';
+      _currentProfilePicture =
+          IconData(_prefs.getInt('profilePicture') ?? Icons.account_circle.codePoint, fontFamily: 'MaterialIcons');
+      _currentEmail = _prefs.getString('email') ?? 'john.doe@example.com';
+    });
+  }
+
+  Future<void> _saveUserData() async {
+    await _prefs.setString('username', _currentUsername);
+    await _prefs.setInt('profilePicture', _currentProfilePicture.codePoint);
+    await _prefs.setString('email', _currentEmail);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +75,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildAccountTabContent() {
-    return ListView(
+  return SingleChildScrollView(
+    child: Column(
       children: [
         // Profile Picture and Name Section
         Padding(
@@ -128,8 +153,10 @@ class _ProfilePageState extends State<ProfilePage> {
           },
         ),
       ],
-    );
-  }
+    ),
+  );
+}
+
 
   Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
     return ElevatedButton(
@@ -173,6 +200,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     setState(() {
                       _currentProfilePicture = getRandomIcon();
                     });
+                    _saveUserData(); // Save the updated user data
                     Navigator.pop(context); // Close the dialog
                   },
                   child: Container(
@@ -213,40 +241,42 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void showChangeUsernameDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String newUsername = _currentUsername;
-        return AlertDialog(
-          title: Text('Change Username'),
-          content: TextField(
-            decoration: InputDecoration(labelText: 'New Username'),
-            onChanged: (value) {
-              newUsername = value;
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      String newUsername = _currentUsername;
+      return AlertDialog(
+        title: Text('Change Username'),
+        content: TextField(
+          decoration: InputDecoration(labelText: 'New Username'),
+          onChanged: (value) {
+            newUsername = value;
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context); // Close the dialog
             },
+            child: Text('Cancel'),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Close the dialog
-              },
-              child: Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                // Update the displayed username
-                setState(() {
-                  _currentUsername = newUsername;
-                });
-                Navigator.pop(context); // Close the dialog
-              },
-              child: Text('Save'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+          TextButton(
+            onPressed: () {
+              // Update the displayed username
+              setState(() {
+                _currentUsername = newUsername;
+              });
+              _saveUserData(); // Save the updated user data
+              Navigator.pop(context); // Close the dialog
+            },
+            child: Text('Save'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   void showChangeEmailDialog(BuildContext context) {
     showDialog(

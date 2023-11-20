@@ -13,6 +13,18 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // + Icon
+              Align(
+                alignment: Alignment.topRight,
+                child: IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: () {
+                    // Open the journal page
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => JournalPage()));
+                  },
+                ),
+              ),
+
               // Current Mood
               Container(
                 padding: EdgeInsets.all(16),
@@ -275,11 +287,11 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               // Displaying recommendations using cards
-              for (Recommendation recommendation in recommendations)
-                RecommendationCard(recommendation: recommendation),
+              for (var i = 0; i < recommendations.length && i < 2; i++)
+                RecommendationCard(recommendation: recommendations[i]),
 
               // Dropdown arrow
-              recommendations.length > 3
+              recommendations.length > 2
                   ? AnimatedContainer(
                       duration: Duration(milliseconds: 300),
                       height: 40,
@@ -287,7 +299,7 @@ class HomePage extends StatelessWidget {
                         isExpanded: true,
                         icon: Icon(Icons.arrow_drop_down),
                         items: [
-                          for (int i = 3; i < recommendations.length; i++)
+                          for (int i = 2; i < recommendations.length; i++)
                             DropdownMenuItem(
                               value: recommendations[i],
                               child: Text(
@@ -329,6 +341,47 @@ class HomePage extends StatelessWidget {
           fontSize: 22,
           fontWeight: FontWeight.bold,
           color: Colors.black,
+        ),
+      ),
+    );
+  }
+}
+
+class JournalPage extends StatelessWidget {
+  const JournalPage({Key? key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Journal'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Journal Content
+            Expanded(
+              child: TextField(
+                maxLines: null,
+                expands: true,
+                decoration: InputDecoration(
+                  hintText: 'Write your thoughts here...',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            // Timer Icon
+            IconButton(
+              icon: Icon(Icons.timer),
+              onPressed: () {
+                // Add logic to set a timer for meditation
+              },
+            ),
+          ],
         ),
       ),
     );
