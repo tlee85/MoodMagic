@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                        
                         SizedBox(width: 8),
-                        Icon(Icons.edit, size: 24, color: Colors.purple), // Use the 'edit' icon
+                        Icon(Icons.edit, size: 24, color:  Color.fromRGBO(139, 76, 252, 50)), // Use the 'edit' icon
                       ],
                     ),
                   ],
@@ -565,7 +565,7 @@ class JournalPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Journal'),
-        backgroundColor: Colors.purple,
+        backgroundColor:  Color.fromRGBO(139, 76, 252, 50),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
