@@ -15,6 +15,7 @@ class _CalendarPageState extends State<CalendarPage> {
   late DateTime _selectedDay;
   late SharedPreferences _prefs;
   int _selectedMoodIndex = 0; // Index for the selected mood emoji
+  Map<DateTime, Color> _moodColorsMap = {};
 
   final List<String> moodEmojis = ['😊', '😢', '😡', '😎']; // Sample mood emojis
   final List<Color> moodColors = [
@@ -107,8 +108,31 @@ class _CalendarPageState extends State<CalendarPage> {
                 _focusedDay = focusedDay;
               });
             },
+            // Add the TableCellBuilder to customize each day cell
+            calendarBuilders: CalendarBuilders(
+              markerBuilder: (context, day, events) {
+                if (_moodColorsMap.containsKey(day)) {
+                  return Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _moodColorsMap[day],
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
           ),
-          // Your other widgets can go here
+          // "Track" button
+          FloatingActionButton(
+            onPressed: () {
+              _trackMood();
+            },
+            child: Icon(Icons.track_changes),
+          ),
         ],
       ),
     );
@@ -125,6 +149,12 @@ class _CalendarPageState extends State<CalendarPage> {
     setState(() {
       _selectedMoodIndex = (_selectedMoodIndex + 1) % moodEmojis.length;
       _prefs.setInt('selectedMoodIndex', _selectedMoodIndex);
+    });
+  }
+
+  void _trackMood() {
+    setState(() {
+      _moodColorsMap[_selectedDay] = moodColors[_selectedMoodIndex];
     });
   }
 }
