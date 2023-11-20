@@ -19,14 +19,21 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
         elevation: 0,
         title: Text(
           'A B O U T',
-          style: TextStyle(color: Colors.grey[800]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
-      body: const Center(child: Text('this app was designed for..')),
+      body: const
+        Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text('Mood Magic was designed for young adults who struggle dealing with stress, to manage their mental health with recommendations and user-to-user communication chosen by our unique algorithms.'),
+        )
+      ),
+      
     );
   }
 }

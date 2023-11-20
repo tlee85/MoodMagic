@@ -51,7 +51,7 @@ class _CalendarPageState extends State<CalendarPage> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
             child: Row(
               children: [
                 // Display selected mood circle
@@ -84,46 +84,52 @@ class _CalendarPageState extends State<CalendarPage> {
               ],
             ),
           ),
-          TableCalendar(
-            firstDay: DateTime.utc(2023, 1, 1),
-            lastDay: DateTime.utc(2023, 12, 31),
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) {
-              return isSameDay(day, _selectedDay);
-            },
-            calendarFormat: _calendarFormat,
-            onFormatChanged: (format) {
-              setState(() {
-                _calendarFormat = format;
-              });
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _prefs.setString('selectedDay', _selectedDay.toIso8601String());
-              });
-            },
-            onPageChanged: (focusedDay) {
-              setState(() {
-                _focusedDay = focusedDay;
-              });
-            },
-            // Add the TableCellBuilder to customize each day cell
-            calendarBuilders: CalendarBuilders(
-              markerBuilder: (context, day, events) {
-                if (_moodColorsMap.containsKey(day)) {
-                  return Container(
-                    width: 20,
-                    height: 20,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _moodColorsMap[day],
-                    ),
-                  );
-                } else {
-                  return Container();
-                }
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TableCalendar(
+              locale: "en_US",
+              rowHeight: 50,
+              headerStyle: HeaderStyle(formatButtonVisible: false, titleCentered: true),
+              firstDay: DateTime.utc(2023, 1, 1),
+              lastDay: DateTime.utc(2023, 12, 31),
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) {
+                return isSameDay(day, _selectedDay);
               },
+              calendarFormat: _calendarFormat,
+              onFormatChanged: (format) {
+                setState(() {
+                  _calendarFormat = format;
+                });
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                setState(() {
+                  _selectedDay = selectedDay;
+                  _prefs.setString('selectedDay', _selectedDay.toIso8601String());
+                });
+              },
+              onPageChanged: (focusedDay) {
+                setState(() {
+                  _focusedDay = focusedDay;
+                });
+              },
+              // Add the TableCellBuilder to customize each day cell
+              calendarBuilders: CalendarBuilders(
+                markerBuilder: (context, day, events) {
+                  if (_moodColorsMap.containsKey(day)) {
+                    return Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _moodColorsMap[day],
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
             ),
           ),
           // "Track" button

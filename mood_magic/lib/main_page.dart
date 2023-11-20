@@ -73,7 +73,7 @@ class _MainPageState extends State<MainPage> {
           builder: (context) => IconButton(
             icon: Icon(
               Icons.menu,
-              color: Colors.grey.shade800,
+              color: Colors.white,
             ),
             onPressed: () => Scaffold.of(context).openDrawer(),
           ),

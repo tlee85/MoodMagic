@@ -12,9 +12,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late SharedPreferences _prefs;
 
-  String _currentUsername = 'JohnDoe'; // Initial username
-  IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
   String _currentEmail = 'john.doe@example.com'; // Initial email
+  String _currentUsername = 'JohnDoe'; // Initial username
+  String _currentPassword = 'password';// Initial password
+  IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
 
   @override
   void initState() {
@@ -315,8 +316,39 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   void showChangePasswordDialog(BuildContext context) {
-    // Implement the password change dialog logic here
-    print('Change Password tapped');
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newPassword = _currentPassword;
+        return AlertDialog(
+          title: Text('Change Password'),
+          content: TextField(
+            decoration: InputDecoration(labelText: 'New Password'),
+            onChanged: (value) {
+              newPassword = value;
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Update the displayed email
+                setState(() {
+                  _currentPassword = newPassword;
+                });
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildHelpTabContent() {

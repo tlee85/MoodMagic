@@ -37,7 +37,7 @@ class MyBottomNavBar extends StatelessWidget {
           ),
           GButton(
             icon: Icons.calendar_today,
-            text: 'Calender',
+            text: 'Calendar',
           ),
           GButton(
             icon: Icons.person,
