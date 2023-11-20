@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'journal_page.dart'; // Import JournalPage class
+
 void main() {
   runApp(const MyApp());
 }
@@ -25,6 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String currentMood = '😊'; // Default mood is happiness
+  List<String> journalEntries = List.filled(7, ''); // Entries for each day
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,9 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => JournalPage()),
+                        MaterialPageRoute(
+                          builder: (context) => JournalPage(journalEntries: journalEntries),
+                        ),
                       );
                     },
                     color: Colors.black,
@@ -79,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                             style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(139, 76, 252, 50), // Change color as needed
+                              color: Color.fromRGBO(139, 76, 252, 50),
                             ),
                           ),
                         ),
@@ -87,9 +92,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Row(
                       children: [
-                       
                         SizedBox(width: 8),
-                        Icon(Icons.edit, size: 24, color:  Color.fromRGBO(139, 76, 252, 50)), // Use the 'edit' icon
+                        Icon(Icons.edit, size: 24, color: Color.fromRGBO(139, 76, 252, 50)),
                       ],
                     ),
                   ],
@@ -118,7 +122,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 
   IconData getMoodIcon(String mood) {
     switch (mood) {
@@ -225,6 +228,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
   void _showTimerDialog(BuildContext context) {
     int selectedTime = 5;
 
@@ -410,117 +414,117 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Recommendation> _getSadRecommendations(String category) {
-  switch (category) {
-    case 'Books':
-      return [
-        Recommendation(
-          title: 'The Fault in Our Stars',
-          icon: Icons.book,
-          description: 'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
-        ),
-        Recommendation(
-          title: 'A Little Life',
-          icon: Icons.book,
-          description: 'A novel that explores the profound effects of trauma and the power of friendship.',
-        ),
-        // Add more sad book recommendations as needed
-      ];
-    case 'Movies':
-      return [
-        Recommendation(
-          title: 'Schindler\'s List',
-          icon: Icons.movie,
-          description: 'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
-        ),
-        Recommendation(
-          title: 'Life is Beautiful',
-          icon: Icons.movie,
-          description: 'An Italian film about a father\'s attempt to shelter his son from the horrors of a concentration camp.',
-        ),
-        // Add more sad movie recommendations as needed
-      ];
-    case 'Songs':
-      return [
-        Recommendation(
-          title: 'Someone Like You - Adele',
-          icon: Icons.music_note,
-          description: 'A soulful song about heartbreak and lost love.',
-        ),
-        Recommendation(
-          title: 'Tears in Heaven - Eric Clapton',
-          icon: Icons.music_note,
-          description: 'A poignant song expressing grief and loss.',
-        ),
-        // Add more sad song recommendations as needed
-      ];
-    default:
-      return [];
+    switch (category) {
+      case 'Books':
+        return [
+          Recommendation(
+            title: 'The Fault in Our Stars',
+            icon: Icons.book,
+            description: 'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
+          ),
+          Recommendation(
+            title: 'A Little Life',
+            icon: Icons.book,
+            description: 'A novel that explores the profound effects of trauma and the power of friendship.',
+          ),
+          // Add more sad book recommendations as needed
+        ];
+      case 'Movies':
+        return [
+          Recommendation(
+            title: 'Schindler\'s List',
+            icon: Icons.movie,
+            description: 'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
+          ),
+          Recommendation(
+            title: 'Life is Beautiful',
+            icon: Icons.movie,
+            description: 'An Italian film about a father\'s attempt to shelter his son from the horrors of a concentration camp.',
+          ),
+          // Add more sad movie recommendations as needed
+        ];
+      case 'Songs':
+        return [
+          Recommendation(
+            title: 'Someone Like You - Adele',
+            icon: Icons.music_note,
+            description: 'A soulful song about heartbreak and lost love.',
+          ),
+          Recommendation(
+            title: 'Tears in Heaven - Eric Clapton',
+            icon: Icons.music_note,
+            description: 'A poignant song expressing grief and loss.',
+          ),
+          // Add more sad song recommendations as needed
+        ];
+      default:
+        return [];
+    }
   }
-}
 
-List<Recommendation> _getCoolRecommendations(String category) {
-  switch (category) {
-    case 'Books':
-      return [
-        Recommendation(
-          title: 'The Girl with the Dragon Tattoo',
-          icon: Icons.book,
-          description: 'A gripping mystery novel with a cool and resourceful protagonist.',
-        ),
-        Recommendation(
-          title: 'Ready Player One',
-          icon: Icons.book,
-          description: 'A science fiction adventure set in a virtual reality world.',
-        ),
-        // Add more cool book recommendations as needed
-      ];
-    case 'Movies':
-      return [
-        Recommendation(
-          title: 'The Matrix',
-          icon: Icons.movie,
-          description: 'A sci-fi classic that explores the concept of reality and virtual worlds.',
-        ),
-        Recommendation(
-          title: 'Drive',
-          icon: Icons.movie,
-          description: 'A stylish and cool film about a stuntman who moonlights as a getaway driver.',
-        ),
-        // Add more cool movie recommendations as needed
-      ];
-    case 'Songs':
-      return [
-        Recommendation(
-          title: 'Smooth Operator - Sade',
-          icon: Icons.music_note,
-          description: 'A smooth and cool jazz-pop song.',
-        ),
-        Recommendation(
-          title: 'Chill Out - Ray Charles',
-          icon: Icons.music_note,
-          description: 'A laid-back and cool song by the legendary Ray Charles.',
-        ),
-        // Add more cool song recommendations as needed
-      ];
-    default:
-      return [];
+  List<Recommendation> _getCoolRecommendations(String category) {
+    switch (category) {
+      case 'Books':
+        return [
+          Recommendation(
+            title: 'The Girl with the Dragon Tattoo',
+            icon: Icons.book,
+            description: 'A gripping mystery novel with a cool and resourceful protagonist.',
+          ),
+          Recommendation(
+            title: 'Ready Player One',
+            icon: Icons.book,
+            description: 'A science fiction adventure set in a virtual reality world.',
+          ),
+          // Add more cool book recommendations as needed
+        ];
+      case 'Movies':
+        return [
+          Recommendation(
+            title: 'The Matrix',
+            icon: Icons.movie,
+            description: 'A sci-fi classic that explores the concept of reality and virtual worlds.',
+          ),
+          Recommendation(
+            title: 'Drive',
+            icon: Icons.movie,
+            description: 'A stylish and cool film about a stuntman who moonlights as a getaway driver.',
+          ),
+          // Add more cool movie recommendations as needed
+        ];
+      case 'Songs':
+        return [
+          Recommendation(
+            title: 'Smooth Operator - Sade',
+            icon: Icons.music_note,
+            description: 'A smooth and cool jazz-pop song.',
+          ),
+          Recommendation(
+            title: 'Chill Out - Ray Charles',
+            icon: Icons.music_note,
+            description: 'A laid-back and cool song by the legendary Ray Charles.',
+          ),
+          // Add more cool song recommendations as needed
+        ];
+      default:
+        return [];
+    }
   }
-}
 
-List<Recommendation> _getAngryRecommendations(String category) {
-  switch (category) {
-    case 'Books':
-      return [
-        Recommendation(
-          title: 'Fight Club',
-          icon: Icons.book,
-          description: 'A novel that explores the disillusionment and anger of modern life.',
-        ),
-        Recommendation(
-          title: 'The Girl on the Train',
-          icon: Icons.book,
-          description: 'A psychological thriller with themes of betrayal and anger.',
-        ),
+  List<Recommendation> _getAngryRecommendations(String category) {
+    switch (category) {
+      case 'Books':
+        return [
+          Recommendation(
+            title: 'Fight Club',
+            icon: Icons.book,
+            description: 'A novel that explores the disillusionment and anger of modern life.',
+          ),
+          Recommendation(
+            title: 'The Girl on the Train',
+            icon: Icons.book,
+            description: 'A psychological thriller with themes of betrayal and anger.',
+          ),
         // Add more angry book recommendations as needed
       ];
     case 'Movies':
@@ -557,103 +561,6 @@ List<Recommendation> _getAngryRecommendations(String category) {
 }
 }
 
-class JournalPage extends StatelessWidget {
-  const JournalPage({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Journal'),
-        backgroundColor:  Color.fromRGBO(139, 76, 252, 50),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: TextField(
-                  maxLines: null,
-                  expands: true,
-                  decoration: InputDecoration(
-                    hintText: 'Write your thoughts here...',
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            IconButton(
-              icon: Icon(Icons.timer),
-              onPressed: () {
-                _showTimerDialog(context);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showTimerDialog(BuildContext context) {
-    int selectedTime = 5;
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Set Meditation Timer'),
-        content: Column(
-          children: [
-            Text('Select time in minutes:'),
-            SizedBox(height: 10),
-            DropdownButton<int>(
-              value: selectedTime,
-              items: List.generate(
-                31,
-                (index) => DropdownMenuItem(
-                  value: index,
-                  child: Text('$index'),
-                ),
-              ),
-              onChanged: (value) {
-                if (value != null) {
-                  selectedTime = value;
-                }
-              },
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _startMeditationTimer(context, selectedTime);
-            },
-            child: Text('Start'),
-          ),
-        ],
-      ),
-    );
-  }
 
   void _startMeditationTimer(BuildContext context, int minutes) async {
     await Future.delayed(Duration(minutes: minutes));
@@ -674,7 +581,7 @@ class JournalPage extends StatelessWidget {
       ),
     );
   }
-}
+
 
 class RecommendationCard extends StatelessWidget {
   final Recommendation recommendation;

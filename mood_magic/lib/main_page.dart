@@ -6,6 +6,7 @@ import 'pages/profile_page.dart';
 import 'pages/social_page.dart';
 import 'pages/calendar_page.dart';
 
+
 /*
 
 M A I N P A G E
@@ -53,6 +54,7 @@ class _MainPageState extends State<MainPage> {
 
     // setting page
     const SocialPage(),
+    
   ];
 
   @override
