@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
 
-/*
-
-A B O U T P A G E
-
-This is the AboutPage. This is usually a static page that displays lots of text
-describing what your app/business does.
-
-This is also a great place to give the user a link or email that they can use 
-to give any feedback about the app.
-
-*/
-
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -26,14 +14,59 @@ class AboutPage extends StatelessWidget {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      body: const
-        Center(
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
-          child: Text('Mood Magic was designed for young adults who struggle dealing with stress, to manage their mental health with recommendations and user-to-user communication chosen by our unique algorithms.'),
-        )
+          child: Card(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Welcome to Mood Magic!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Mood Magic was designed for young adults who struggle dealing with stress, to manage their mental health with recommendations and user-to-user communication chosen by our unique algorithms.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your feedback action here
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromRGBO(139, 76, 252, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text(
+                      'Give Feedback',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
-      
     );
   }
 }
