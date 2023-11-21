@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:startertemplate/pages/login_page.dart';
+import 'pages/introduction_screen.dart';
 
 /*
 
@@ -20,9 +21,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
-      // this is bringing us to the LoginPage first
-      home: LoginPage(),
+      home: const IntroductionScreens(),
     );
   }
 }
