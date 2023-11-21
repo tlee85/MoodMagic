@@ -162,16 +162,123 @@ class SocialPage extends StatelessWidget {
 class FriendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO: Implement the Friends Page UI
     return Scaffold(
       appBar: AppBar(
-        title: Text('Friends'),
+        title: Text('Friends (15)'),
         backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       ),
-      body: Center(
-        child: Text('Friends Page Content'),
-      ),
+      body: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
+            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
+            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
+            ],
+          ),
+        ),
+      )
     );
+  }
+}
+
+class FriendsBox extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      width: 400,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(width: 2, color: Colors.grey),
+        )
+      ),
+      child: Scaffold(
+        body: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.blueGrey[100],
+                  border: Border.all(
+                  color: Colors.blue,
+                  width: 2.0,
+                  ),
+                ),
+                child: Icon(
+                  getRandomIcon(),
+                  size: 30,
+                  color: Colors.blueGrey[700],
+                ),
+              ),
+            ),
+            Text(getRandomUsername()),
+          ],
+        )
+      )
+    );
+  }
+
+  String getRandomUsername() {
+    List<String> usernames = [
+      'Alice',
+      'Bob',
+      'Charlie',
+      'David',
+      'Eva',
+      'Frank',
+      'Grace',
+      'Hank',
+      'Ivy',
+      'Jack',
+      'Joe',
+      'Jake',
+      'Jill',
+      'Chris',
+      'Martin',
+      'Yu',
+      'Lee',
+      'Cong',
+      'Jenny',
+      'Cook',
+      'James',
+      'Fabian',
+      'Bill',
+      'Josh',
+      'Mac',
+    ];
+
+    final Random random = Random();
+    int randomIndex = random.nextInt(usernames.length);
+    return usernames[randomIndex];
+  }
+
+  IconData getRandomIcon() {
+    List<IconData> icons = [
+      Icons.face,
+      Icons.pets,
+      Icons.star,
+      Icons.favorite,
+      Icons.accessibility,
+      Icons.alarm,
+      Icons.beach_access,
+      Icons.cake,
+      Icons.directions_run,
+      Icons.local_cafe,
+      Icons.music_note,
+      Icons.palette,
+      Icons.shopping_cart,
+      Icons.train,
+    ];
+
+    final Random random = Random();
+    int randomIndex = random.nextInt(icons.length);
+    return icons[randomIndex];
   }
 }
 

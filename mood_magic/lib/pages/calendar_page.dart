@@ -79,6 +79,8 @@ class _CalendarPageState extends State<CalendarPage> {
             ),
           ),
           TableCalendar(
+            headerStyle: HeaderStyle(formatButtonVisible: false, titleCentered: true),
+            rowHeight: 50,
             firstDay: DateTime.utc(2023, 1, 1),
             lastDay: DateTime.utc(2023, 12, 31),
             focusedDay: _focusedDay,
