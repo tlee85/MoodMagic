@@ -25,7 +25,7 @@ Once the user is authenticated, they are directed to the homepage.
 */
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();

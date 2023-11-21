@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
-import 'main_page.dart';
-import 'pages/onboarding_page.dart';
+import 'package:startertemplate/pages/login_page.dart';
+import 'pages/introduction_screen.dart';
 
+/*
+
+S T A R T
+
+This is the starting point for all apps. 
+Everything starts at the main function
+
+*/
 void main() {
+  // lets run our app
   runApp(const MyApp());
 }
 
@@ -11,13 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool hasCompletedOnboarding =
-        true; // Set this flag based on whether onboarding is completed
-
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       debugShowCheckedModeBanner: false,
-      // Check if onboarding is completed and navigate accordingly
-      home: hasCompletedOnboarding ? const MainPage() : const OnboardingPage(),
+      home: const IntroductionScreens(),
     );
   }
 }
