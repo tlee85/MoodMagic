@@ -38,6 +38,7 @@ class _CalendarPageState extends State<CalendarPage> {
         _prefs = prefs;
         _selectedDay = DateTime.parse(_prefs.getString('selectedDay') ?? '');
         _selectedMoodIndex = _prefs.getInt('selectedMoodIndex') ?? 0;
+        _moodColorsMap = _getMoodColorsFromPrefs();
       });
     });
   }
@@ -47,21 +48,18 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Calendar'),
+        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                // Display selected mood circle
-                Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: moodColors[_selectedMoodIndex],
-                  ),
+                // Display selected mood emoji
+                Text(
+                  moodEmojis[_selectedMoodIndex],
+                  style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(width: 8),
                 // Emoji selection arrow buttons
@@ -70,10 +68,6 @@ class _CalendarPageState extends State<CalendarPage> {
                   onPressed: () {
                     _selectPreviousMood();
                   },
-                ),
-                Text(
-                  moodEmojis[_selectedMoodIndex],
-                  style: TextStyle(fontSize: 20),
                 ),
                 IconButton(
                   icon: Icon(Icons.arrow_forward),
@@ -84,52 +78,42 @@ class _CalendarPageState extends State<CalendarPage> {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TableCalendar(
-              locale: "en_US",
-              rowHeight: 50,
-              headerStyle: HeaderStyle(formatButtonVisible: false, titleCentered: true),
-              firstDay: DateTime.utc(2023, 1, 1),
-              lastDay: DateTime.utc(2023, 12, 31),
-              focusedDay: _focusedDay,
-              selectedDayPredicate: (day) {
-                return isSameDay(day, _selectedDay);
+          TableCalendar(
+            firstDay: DateTime.utc(2023, 1, 1),
+            lastDay: DateTime.utc(2023, 12, 31),
+            focusedDay: _focusedDay,
+            selectedDayPredicate: (day) {
+              return isSameDay(day, _selectedDay);
+            },
+            calendarFormat: _calendarFormat,
+            onFormatChanged: (format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _prefs.setString('selectedDay', _selectedDay.toIso8601String());
+              });
+            },
+            onPageChanged: (focusedDay) {
+              setState(() {
+                _focusedDay = focusedDay;
+              });
+            },
+            // Add the TableCellBuilder to customize each day cell
+            calendarBuilders: CalendarBuilders(
+              markerBuilder: (context, day, events) {
+                if (_moodColorsMap.containsKey(day)) {
+                  return Text(
+                    _getEmojiForColor(_moodColorsMap[day]!),
+                    style: TextStyle(fontSize: 16),
+                  );
+                } else {
+                  return Container();
+                }
               },
-              calendarFormat: _calendarFormat,
-              onFormatChanged: (format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _prefs.setString('selectedDay', _selectedDay.toIso8601String());
-                });
-              },
-              onPageChanged: (focusedDay) {
-                setState(() {
-                  _focusedDay = focusedDay;
-                });
-              },
-              // Add the TableCellBuilder to customize each day cell
-              calendarBuilders: CalendarBuilders(
-                markerBuilder: (context, day, events) {
-                  if (_moodColorsMap.containsKey(day)) {
-                    return Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _moodColorsMap[day],
-                      ),
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
             ),
           ),
           // "Track" button
@@ -162,6 +146,68 @@ class _CalendarPageState extends State<CalendarPage> {
     setState(() {
       _moodColorsMap[_selectedDay] = moodColors[_selectedMoodIndex];
     });
+
+    // Save mood colors to SharedPreferences
+    _saveMoodColorsToPrefs();
+
+    // Debug print to check if the function is called
+    print('Mood colors saved: $_moodColorsMap');
+  }
+
+  Map<DateTime, Color> _getMoodColorsFromPrefs() {
+    Map<DateTime, Color> moodColorsMap = {};
+    List<String>? savedColors = _prefs.getStringList('moodColors');
+    if (savedColors != null) {
+      savedColors.forEach((savedColor) {
+        List<String> parts = savedColor.split(':');
+        if (parts.length == 2) {
+          DateTime date = DateTime.parse(parts[0]);
+          Color color = _colorFromHex(parts[1]);
+          moodColorsMap[date] = color;
+        }
+      });
+    }
+    return moodColorsMap;
+  }
+
+  void _saveMoodColorsToPrefs() {
+    List<String> colorsList = [];
+    _moodColorsMap.forEach((date, color) {
+      String dateString = date.toIso8601String();
+      String colorString = _colorToHex(color);
+      String entry = '$dateString:$colorString';
+      colorsList.add(entry);
+    });
+    _prefs.setStringList('moodColors', colorsList);
+  }
+
+  Color _colorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return Color(int.parse(hexColor, radix: 16));
+  }
+
+  String _colorToHex(Color color) {
+    return "#${color.value.toRadixString(16).substring(2, 8).toUpperCase()}";
+  }
+
+  String _getEmojiForColor(Color color) {
+    // Depending on your color-to-emoji mapping, implement this method
+    // to return the corresponding emoji for a given color.
+    // This is just a placeholder and may not be accurate for your use case.
+    if (color == Colors.green) {
+      return '😊';
+    } else if (color == Colors.blue) {
+      return '😢';
+    } else if (color == Colors.red) {
+      return '😡';
+    } else if (color == Colors.orange) {
+      return '😎';
+    } else {
+      return '❓'; // Placeholder for unknown color
+    }
   }
 }
 
