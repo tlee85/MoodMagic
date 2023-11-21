@@ -46,6 +46,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
+          backgroundColor: Color.fromRGBO(139, 76, 252, 50),
           bottom: TabBar(
             tabs: [
               Tab(text: 'Account'),
