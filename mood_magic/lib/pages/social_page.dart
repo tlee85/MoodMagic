@@ -16,22 +16,11 @@ class SocialPage extends StatelessWidget {
           itemBuilder: (context, index) => buildSocialListItem(context, index),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FriendsPage(),
-            ),
-          );
-        },
-        child: Icon(Icons.group),
-      ),
     );
   }
 
   Widget buildSocialListItem(BuildContext context, int index) {
-    String username = getRandomUsername();
+    String username = 'User $index';
     IconData randomIcon = getRandomIcon();
 
     return InkWell(
@@ -137,41 +126,6 @@ class SocialPage extends StatelessWidget {
     final Random random = Random();
     int randomIndex = random.nextInt(icons.length);
     return icons[randomIndex];
-  }
-
-  String getRandomUsername() {
-    List<String> usernames = [
-      'Alice',
-      'Bob',
-      'Charlie',
-      'David',
-      'Eva',
-      'Frank',
-      'Grace',
-      'Hank',
-      'Ivy',
-      'Jack',
-    ];
-
-    final Random random = Random();
-    int randomIndex = random.nextInt(usernames.length);
-    return usernames[randomIndex];
-  }
-}
-
-class FriendsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: Implement the Friends Page UI
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Friends'),
-        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
-      ),
-      body: Center(
-        child: Text('Friends Page Content'),
-      ),
-    );
   }
 }
 
