@@ -42,7 +42,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       child: Column(
         children: [
           // Drawer header
@@ -74,7 +74,8 @@ class MyDrawer extends StatelessWidget {
                 leading: const Icon(Icons.info),
                 title: Text(
                   "A B O U T",
-                  style: TextStyle(color: Colors.grey[700]),
+                  style: TextStyle(color: Colors.white),
+                  
                 ),
               ),
             ),
@@ -88,7 +89,7 @@ class MyDrawer extends StatelessWidget {
               onTap: () => logUserOut(context),
               title: Text(
                 "L O G O U T",
-                style: TextStyle(color: Colors.grey[700]),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ),
