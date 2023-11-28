@@ -108,7 +108,7 @@ class SocialPage extends StatelessWidget {
                         Text(
                           chatTexts[index % chatTexts.length],
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color.fromARGB(255, 74, 74, 74),
                             fontSize: 14,
                           ),
                         ),
