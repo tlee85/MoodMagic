@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
 
 class SocialPage extends StatelessWidget {
   const SocialPage({Key? key});
@@ -32,7 +33,7 @@ class SocialPage extends StatelessWidget {
 
   Widget buildSocialListItem(BuildContext context, int index) {
     String username = getRandomUsername();
-    IconData randomIcon = getRandomIcon();
+    AssetImage sequentialImage = getSequentialImage(index);
 
     // List of possible text choices
     List<String> chatTexts = [
@@ -53,7 +54,7 @@ class SocialPage extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => MessageThreadPage(
               username: username,
-              profileIcon: randomIcon,
+              profileImage: sequentialImage,
             ),
           ),
         );
@@ -82,10 +83,9 @@ class SocialPage extends StatelessWidget {
                       width: 2.0,
                     ),
                   ),
-                  child: Icon(
-                    randomIcon,
-                    size: 30,
-                    color: Colors.blueGrey[700],
+                  child: CircleAvatar(
+                    backgroundImage: sequentialImage,
+                    radius: 30,
                   ),
                 ),
 
@@ -106,9 +106,7 @@ class SocialPage extends StatelessWidget {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          chatTexts[index %
-                              chatTexts
-                                  .length], // Choose sequentially from the list
+                          chatTexts[index % chatTexts.length],
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 14,
@@ -130,39 +128,16 @@ class SocialPage extends StatelessWidget {
     );
   }
 
-  IconData getRandomIcon() {
-    List<IconData> icons = [
-      Icons.face,
-      Icons.pets,
-      Icons.star,
-      Icons.favorite,
-      Icons.accessibility,
-      Icons.alarm,
-      Icons.beach_access,
-      Icons.cake,
-      Icons.directions_run,
-      Icons.local_cafe,
-      Icons.music_note,
-      Icons.palette,
-      Icons.shopping_cart,
-      Icons.train,
-    ];
-
-    final Random random = Random();
-    int randomIndex = random.nextInt(icons.length);
-    return icons[randomIndex];
-  }
-
   String getRandomUsername() {
     List<String> usernames = [
       'Alice',
-      'Bob',
-      'Charlie',
-      'David',
+      'BobbyBoy',
+      'HannahBanana',
+      'Davvvvviid',
       'Eva',
-      'Frank',
-      'Grace',
-      'Hank',
+      'Frankfurther',
+      'Grace272',
+      'BondJamesBond',
       'Ivy',
       'Jack',
     ];
@@ -186,21 +161,21 @@ class FriendsPage extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
-                FriendsBox(),
+                FriendsBox(index: 0),
+                FriendsBox(index: 2),
+                FriendsBox(index: 1),
+                FriendsBox(index: 1),
+                FriendsBox(index: 3),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
+                FriendsBox(index: 0),
               ],
             ),
           ),
@@ -208,18 +183,42 @@ class FriendsPage extends StatelessWidget {
   }
 }
 
+AssetImage getSequentialImage(int index) {
+  List<String> imagePaths = [
+    'lib/images/nash.png',
+    'lib/images/astro.png',
+    'lib/images/mike.png',
+    'lib/images/racc.png',
+    'lib/images/bint.png',
+    'lib/images/beetle.png',
+    'lib/images/treeball.png',
+    'lib/images/natheart.png',
+    // Add more image paths as needed
+  ];
+
+  // Use the index to get the image path sequentially
+  return AssetImage(imagePaths[index % imagePaths.length]);
+}
+
 class FriendsBox extends StatelessWidget {
+  final int index;
+
+  FriendsBox({required this.index});
+
   @override
   Widget build(BuildContext context) {
+    AssetImage sequentialImage = getSequentialImage(index);
+
     return Container(
-        height: 100,
-        width: 400,
-        decoration: BoxDecoration(
-            border: Border(
+      height: 100,
+      width: 400,
+      decoration: BoxDecoration(
+        border: Border(
           bottom: BorderSide(width: 2, color: Colors.grey),
-        )),
-        child: Scaffold(
-            body: Row(
+        ),
+      ),
+      child: Scaffold(
+        body: Row(
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -234,33 +233,34 @@ class FriendsBox extends StatelessWidget {
                     width: 2.0,
                   ),
                 ),
-                child: Icon(
-                  getRandomIcon(),
-                  size: 30,
-                  color: Colors.blueGrey[700],
+                child: CircleAvatar(
+                  backgroundImage: sequentialImage,
+                  radius: 30,
                 ),
               ),
             ),
             Text(getRandomUsername()),
           ],
-        )));
+        ),
+      ),
+    );
   }
 
   String getRandomUsername() {
     List<String> usernames = [
       'Alice',
-      'Bob',
+      'BobbyBoy',
       'Charlie',
-      'David',
+      'Davvvvvid',
       'Eva',
       'Frank',
-      'Grace',
+      'Grace272',
       'Hank',
       'Ivy',
-      'Jack',
-      'Joe',
-      'Jake',
-      'Jill',
+      'BondJamesBond',
+      'cottonEyeJoe',
+      'Jakethesnakedog',
+      'Jillli',
       'Chris',
       'Martin',
       'Yu',
@@ -279,39 +279,16 @@ class FriendsBox extends StatelessWidget {
     int randomIndex = random.nextInt(usernames.length);
     return usernames[randomIndex];
   }
-
-  IconData getRandomIcon() {
-    List<IconData> icons = [
-      Icons.face,
-      Icons.pets,
-      Icons.star,
-      Icons.favorite,
-      Icons.accessibility,
-      Icons.alarm,
-      Icons.beach_access,
-      Icons.cake,
-      Icons.directions_run,
-      Icons.local_cafe,
-      Icons.music_note,
-      Icons.palette,
-      Icons.shopping_cart,
-      Icons.train,
-    ];
-
-    final Random random = Random();
-    int randomIndex = random.nextInt(icons.length);
-    return icons[randomIndex];
-  }
 }
 
 class MessageThreadPage extends StatefulWidget {
   final String username;
-  final IconData profileIcon;
+  final AssetImage profileImage;
 
   const MessageThreadPage({
     Key? key,
     required this.username,
-    required this.profileIcon,
+    required this.profileImage,
   }) : super(key: key);
 
   @override
@@ -366,10 +343,10 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                   width: 2.0,
                 ),
               ),
-              child: Icon(
-                widget.profileIcon,
-                size: 20,
-                color: Colors.blueGrey[700],
+              child: CircleAvatar(
+                backgroundImage:
+                    widget.profileImage, // Use widget.profileImage here
+                radius: 20,
               ),
             ),
 
@@ -465,10 +442,9 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                   width: 2.0,
                 ),
               ),
-              child: Icon(
-                widget.profileIcon,
-                size: 15,
-                color: Colors.blueGrey[700],
+              child: CircleAvatar(
+                backgroundImage: widget.profileImage,
+                radius: 15,
               ),
             ),
           Text(message),

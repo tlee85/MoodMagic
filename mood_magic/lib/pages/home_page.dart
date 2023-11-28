@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(207, 204, 251, 1),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -55,7 +55,8 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => JournalPage(journalEntries: journalEntries),
+                          builder: (context) =>
+                              JournalPage(journalEntries: journalEntries),
                         ),
                       );
                     },
@@ -93,7 +94,8 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         SizedBox(width: 8),
-                        Icon(Icons.edit, size: 24, color: Color.fromRGBO(139, 76, 252, 50)),
+                        Icon(Icons.edit,
+                            size: 24, color: Color.fromRGBO(139, 76, 252, 50)),
                       ],
                     ),
                   ],
@@ -111,11 +113,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: 20),
-              buildRecommendationSection('Books', getRecommendations(currentMood, 'Books')),
+              buildRecommendationSection(
+                  'Books', getRecommendations(currentMood, 'Books')),
               SizedBox(height: 20),
-              buildRecommendationSection('Movies', getRecommendations(currentMood, 'Movies')),
+              buildRecommendationSection(
+                  'Movies', getRecommendations(currentMood, 'Movies')),
               SizedBox(height: 20),
-              buildRecommendationSection('Songs', getRecommendations(currentMood, 'Songs')),
+              buildRecommendationSection(
+                  'Songs', getRecommendations(currentMood, 'Songs')),
             ],
           ),
         ),
@@ -138,8 +143,8 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
-  Widget buildRecommendationSection(String category, List<Recommendation> recommendations) {
+  Widget buildRecommendationSection(
+      String category, List<Recommendation> recommendations) {
     double containerHeight = MediaQuery.of(context).size.width / 665 * 1000;
 
     return Column(
@@ -343,12 +348,14 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'The Power of Now',
             imageUrl: 'lib/images/tpon.png',
-            description: 'A guide to spiritual enlightenment and living in the present moment.',
+            description:
+                'A guide to spiritual enlightenment and living in the present moment.',
           ),
           Recommendation(
             title: 'The Remains of the Day',
             imageUrl: 'lib/images/trotd.png',
-            description: 'A poignant novel about an English butler reflecting on a life of service and the changing world around him.',
+            description:
+                'A poignant novel about an English butler reflecting on a life of service and the changing world around him.',
           ),
         ];
       case 'Movies':
@@ -356,17 +363,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'The Pursuit of Happyness',
             imageUrl: 'lib/images/tpoh.png',
-            description: 'A biographical drama about overcoming life challenges.',
+            description:
+                'A biographical drama about overcoming life challenges.',
           ),
           Recommendation(
             title: 'La La Land',
             imageUrl: 'lib/images/lll.png',
-            description: 'A musical that celebrates dreams and the pursuit of passion.',
+            description:
+                'A musical that celebrates dreams and the pursuit of passion.',
           ),
           Recommendation(
             title: 'Amour',
             imageUrl: 'lib/images/amour.png',
-            description: 'A deeply moving French film that delves into the complexities of love, aging, and mortality.',
+            description:
+                'A deeply moving French film that delves into the complexities of love, aging, and mortality.',
           ),
         ];
       case 'Songs':
@@ -381,10 +391,11 @@ class _HomePageState extends State<HomePage> {
             imageUrl: 'lib/images/dwbh.png',
             description: 'A classic song with a positive message.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'Whats Going on - Marvin Gay',
             imageUrl: 'lib/images/wgo.png',
-            description: 'A soulful and socially conscious anthem that remains relevant, addressing themes of war and injustice.',
+            description:
+                'A soulful and socially conscious anthem that remains relevant, addressing themes of war and injustice.',
           ),
         ];
       default:
@@ -399,17 +410,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'The Fault in Our Stars',
             imageUrl: 'lib/images/tfios.png',
-            description: 'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
+            description:
+                'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
           ),
           Recommendation(
             title: 'A Little Life',
             imageUrl: 'lib/images/all.png',
-            description: 'A novel that explores the profound effects of trauma and the power of friendship.',
+            description:
+                'A novel that explores the profound effects of trauma and the power of friendship.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'Never Let Me Go',
             imageUrl: 'lib/images/nlmg.png',
-            description: 'Kazuo Ishiguros haunting exploration of love, loss, and the ethics of a dystopian society.',
+            description:
+                'Kazuo Ishiguros haunting exploration of love, loss, and the ethics of a dystopian society.',
           ),
         ];
       case 'Movies':
@@ -417,17 +431,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'Schindler\'s List',
             imageUrl: 'lib/images/sl.png',
-            description: 'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
+            description:
+                'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
           ),
           Recommendation(
             title: 'Life is Beautiful',
             imageUrl: 'lib/images/lib.png',
-            description: 'An Italian film about a father\'s attempt to shelter his son from the horrors of a concentration camp.',
+            description:
+                'An Italian film about a father\'s attempt to shelter his son from the horrors of a concentration camp.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'Requiem for a Dream',
             imageUrl: 'lib/images/rfad.png',
-            description: ' A visceral and intense film portraying the destructive impact of addiction on individuals and their relationships.',
+            description:
+                ' A visceral and intense film portraying the destructive impact of addiction on individuals and their relationships.',
           ),
         ];
       case 'Songs':
@@ -442,10 +459,11 @@ class _HomePageState extends State<HomePage> {
             imageUrl: 'lib/images/tih.png',
             description: 'A poignant song expressing grief and loss.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'Hallelujah - Jeff Buckley',
             imageUrl: 'lib/images/jeff.png',
-            description: 'A soulful and melancholic rendition of Leonard Cohens classic, expressing the complexities of love and spirituality.',
+            description:
+                'A soulful and melancholic rendition of Leonard Cohens classic, expressing the complexities of love and spirituality.',
           ),
         ];
       default:
@@ -460,17 +478,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'The Girl with the Dragon Tattoo',
             imageUrl: 'lib/images/tgwtdt.png',
-            description: 'A gripping mystery novel with a cool and resourceful protagonist.',
+            description:
+                'A gripping mystery novel with a cool and resourceful protagonist.',
           ),
           Recommendation(
             title: 'Ready Player One',
             imageUrl: 'lib/images/rp1.png',
-            description: 'A science fiction adventure set in a virtual reality world.',
+            description:
+                'A science fiction adventure set in a virtual reality world.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'The Big Sleep',
             imageUrl: 'lib/images/tbs.png',
-            description: 'Raymond Chandlers classic noir novel featuring the cool and enigmatic private detective Philip Marlowe.',
+            description:
+                'Raymond Chandlers classic noir novel featuring the cool and enigmatic private detective Philip Marlowe.',
           ),
         ];
       case 'Movies':
@@ -478,17 +499,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'The Matrix',
             imageUrl: 'lib/images/matrix.png',
-            description: 'A sci-fi classic that explores the concept of reality and virtual worlds.',
+            description:
+                'A sci-fi classic that explores the concept of reality and virtual worlds.',
           ),
           Recommendation(
             title: 'Drive',
             imageUrl: 'lib/images/drive.png',
-            description: 'A stylish and cool film about a stuntman who moonlights as a getaway driver.',
+            description:
+                'A stylish and cool film about a stuntman who moonlights as a getaway driver.',
           ),
-           Recommendation(
+          Recommendation(
             title: 'Heat',
             imageUrl: 'lib/images/heat.png',
-            description: 'A crime thriller with a cool ensemble cast, exploring the lives of criminals and detectives on opposite sides of the law.',
+            description:
+                'A crime thriller with a cool ensemble cast, exploring the lives of criminals and detectives on opposite sides of the law.',
           ),
         ];
       case 'Songs':
@@ -501,12 +525,14 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'Hit The Road Jack - Ray Charles',
             imageUrl: 'lib/images/htrj.png',
-            description: 'A laid-back and cool song by the legendary Ray Charles.',
+            description:
+                'A laid-back and cool song by the legendary Ray Charles.',
           ),
           Recommendation(
             title: 'Royals - Lorde',
             imageUrl: 'lib/images/royals.png',
-            description: 'A minimalist and stylish pop anthem with Lordes cool and distinctive vocals.',
+            description:
+                'A minimalist and stylish pop anthem with Lordes cool and distinctive vocals.',
           ),
         ];
       default:
@@ -521,17 +547,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'Fight Club',
             imageUrl: 'lib/images/fc.png',
-            description: 'A novel that explores the disillusionment and anger of modern life.',
+            description:
+                'A novel that explores the disillusionment and anger of modern life.',
           ),
           Recommendation(
             title: 'The Girl on the Train',
             imageUrl: 'lib/images/tgott.png',
-            description: 'A psychological thriller with themes of betrayal and anger.',
+            description:
+                'A psychological thriller with themes of betrayal and anger.',
           ),
           Recommendation(
             title: 'One Flew Over the Cuckoos Nest',
             imageUrl: 'lib/images/ofotcn.png',
-            description: 'A classic novel that critiques societal norms through the experiences of patients in a mental institution.',
+            description:
+                'A classic novel that critiques societal norms through the experiences of patients in a mental institution.',
           ),
         ];
       case 'Movies':
@@ -539,17 +568,20 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'American History X',
             imageUrl: 'lib/images/ahx.png',
-            description: 'A film that delves into the roots of racism and anger in America.',
+            description:
+                'A film that delves into the roots of racism and anger in America.',
           ),
           Recommendation(
             title: 'Taxi Driver',
             imageUrl: 'lib/images/td.png',
-            description: 'A classic film depicting the descent into anger and violence.',
+            description:
+                'A classic film depicting the descent into anger and violence.',
           ),
-           Recommendation(
+          Recommendation(
             title: 'Se7en',
             imageUrl: 'lib/images/seven.png',
-            description: 'A gritty and psychological crime thriller that explores the darkest aspects of human nature.',
+            description:
+                'A gritty and psychological crime thriller that explores the darkest aspects of human nature.',
           ),
         ];
       case 'Songs':
@@ -557,17 +589,19 @@ class _HomePageState extends State<HomePage> {
           Recommendation(
             title: 'Killing in the Name - Rage Against the Machine',
             imageUrl: 'lib/images/kitn.png',
-            description: 'A powerful protest song expressing anger against authority.',
+            description:
+                'A powerful protest song expressing anger against authority.',
           ),
           Recommendation(
             title: 'Break Stuff - Limp Bizkit',
             imageUrl: 'lib/images/bs.png',
             description: 'An intense song reflecting frustration and anger.',
           ),
-         Recommendation(
+          Recommendation(
             title: 'Down with the Sickness - Disturbed',
             imageUrl: 'lib/images/dwts.png',
-            description: 'An intense and aggressive metal song expressing frustration and disillusionment.',
+            description:
+                'An intense and aggressive metal song expressing frustration and disillusionment.',
           ),
         ];
       default:
@@ -627,7 +661,8 @@ class JournalPage extends StatelessWidget {
 class RecommendationCard extends StatelessWidget {
   final Recommendation recommendation;
 
-  const RecommendationCard({Key? key, required this.recommendation}) : super(key: key);
+  const RecommendationCard({Key? key, required this.recommendation})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -670,7 +705,8 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 
-  void showRecommendationDetails(BuildContext context, Recommendation recommendation) {
+  void showRecommendationDetails(
+      BuildContext context, Recommendation recommendation) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -705,8 +741,6 @@ class RecommendationCard extends StatelessWidget {
     );
   }
 }
-
-
 
 class Recommendation {
   final String title;
