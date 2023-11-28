@@ -8,7 +8,7 @@ class SocialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromRGBO(207, 204, 251, 1),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView.builder(
@@ -34,6 +34,18 @@ class SocialPage extends StatelessWidget {
     String username = getRandomUsername();
     IconData randomIcon = getRandomIcon();
 
+    // List of possible text choices
+    List<String> chatTexts = [
+      'Yo you should check out this movie',
+      'Feeling hella sad today',
+      'gadjbeaifyieabifyeaif',
+      'Whoah Nash should totally give us an A+',
+      'You heard about Nash giving us an A++++?',
+      'I cannot believe this looks so good for investors amirite',
+      'hahahahahahahahah',
+      'wowzers',
+    ];
+
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -46,72 +58,74 @@ class SocialPage extends StatelessWidget {
           ),
         );
       },
-      child: Container(
-        height: 100,
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
-              offset: Offset(0, 3),
+      child: Column(
+        children: [
+          Container(
+            height: 100,
+            margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: const Color.fromRGBO(207, 204, 251, 1),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            // Profile Picture
-            Container(
-              width: 60,
-              height: 60,
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.blueGrey[100],
-                border: Border.all(
-                  color: Colors.blue,
-                  width: 2.0,
+            child: Row(
+              children: [
+                // Profile Picture
+                Container(
+                  width: 60,
+                  height: 60,
+                  margin: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blueGrey[100],
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 2.0,
+                    ),
+                  ),
+                  child: Icon(
+                    randomIcon,
+                    size: 30,
+                    color: Colors.blueGrey[700],
+                  ),
                 ),
-              ),
-              child: Icon(
-                randomIcon,
-                size: 30,
-                color: Colors.blueGrey[700],
-              ),
-            ),
 
-            // User Info
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      username,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                // User Info
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          username,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 4),
+                        Text(
+                          chatTexts[index %
+                              chatTexts
+                                  .length], // Choose sequentially from the list
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Tap to chat',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Divider(
+            color: Colors.grey,
+            thickness: 2,
+          ),
+        ],
       ),
     );
   }
@@ -163,39 +177,49 @@ class FriendsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Friends (15)'),
-        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: SingleChildScrollView(
-          child: Column(children: <Widget>[
-            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
-            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
-            FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(), FriendsBox(),
-            ],
-          ),
+        appBar: AppBar(
+          title: Text('Friends (15)'),
+          backgroundColor: Color.fromRGBO(139, 76, 252, 50),
         ),
-      )
-    );
+        body: Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+                FriendsBox(),
+              ],
+            ),
+          ),
+        ));
   }
 }
 
 class FriendsBox extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 400,
-      decoration: BoxDecoration(
-        border: Border(
+        height: 100,
+        width: 400,
+        decoration: BoxDecoration(
+            border: Border(
           bottom: BorderSide(width: 2, color: Colors.grey),
-        )
-      ),
-      child: Scaffold(
-        body: Row(
+        )),
+        child: Scaffold(
+            body: Row(
           children: [
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -206,8 +230,8 @@ class FriendsBox extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.blueGrey[100],
                   border: Border.all(
-                  color: Colors.blue,
-                  width: 2.0,
+                    color: Colors.blue,
+                    width: 2.0,
                   ),
                 ),
                 child: Icon(
@@ -219,9 +243,7 @@ class FriendsBox extends StatelessWidget {
             ),
             Text(getRandomUsername()),
           ],
-        )
-      )
-    );
+        )));
   }
 
   String getRandomUsername() {
@@ -314,7 +336,8 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
   }
 
   Future<void> loadMessages() async {
-    List<String> savedMessages = prefs.getStringList('messages_${widget.username}') ?? [];
+    List<String> savedMessages =
+        prefs.getStringList('messages_${widget.username}') ?? [];
     setState(() {
       messages = savedMessages;
     });
@@ -425,7 +448,8 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
         ],
       ),
       child: Row(
-        mainAxisAlignment: isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment:
+            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!isMe)
             // Profile Picture for received messages
