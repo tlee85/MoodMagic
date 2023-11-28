@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'journal_page.dart'; // Import JournalPage class
-
 void main() {
   runApp(const MyApp());
 }
@@ -26,8 +24,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String currentMood = '😊'; // Default mood is happiness
-  List<String> journalEntries = List.filled(7, ''); // Entries for each day
+  PageController _pageController = PageController();
+
+  String currentMood = '😊';
+  List<String> journalEntries = List.filled(7, '');
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +138,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
   Widget buildRecommendationSection(String category, List<Recommendation> recommendations) {
+    double containerHeight = MediaQuery.of(context).size.width / 665 * 1000;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -167,50 +170,14 @@ class _HomePageState extends State<HomePage> {
         ),
         SizedBox(height: 12),
         Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-            color: Colors.white,
-          ),
-          child: Column(
-            children: [
-              for (var i = 0; i < recommendations.length && i < 2; i++)
-                RecommendationCard(recommendation: recommendations[i]),
-              recommendations.length > 2
-                  ? AnimatedContainer(
-                      duration: Duration(milliseconds: 300),
-                      height: 40,
-                      child: DropdownButton(
-                        isExpanded: true,
-                        icon: Icon(Icons.arrow_drop_down),
-                        items: [
-                          for (int i = 2; i < recommendations.length; i++)
-                            DropdownMenuItem(
-                              value: recommendations[i],
-                              child: Text(
-                                recommendations[i].title,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                        ],
-                        onChanged: (value) {
-                          // Handle dropdown item selection
-                        },
-                      ),
-                    )
-                  : Container(),
-            ],
+          height: containerHeight, // Set the height based on the aspect ratio
+          child: PageView.builder(
+            controller: _pageController,
+            scrollDirection: Axis.horizontal,
+            itemCount: recommendations.length,
+            itemBuilder: (context, index) {
+              return RecommendationCard(recommendation: recommendations[index]);
+            },
           ),
         ),
       ],
@@ -219,7 +186,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildCard({required Widget child}) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 15),
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -370,43 +337,55 @@ class _HomePageState extends State<HomePage> {
         return [
           Recommendation(
             title: 'The Happiness Project',
-            icon: Icons.book,
+            imageUrl: 'lib/images/thp.png',
             description: 'A book about finding happiness in everyday life.',
           ),
           Recommendation(
             title: 'The Power of Now',
-            icon: Icons.book,
+            imageUrl: 'lib/images/tpon.png',
             description: 'A guide to spiritual enlightenment and living in the present moment.',
           ),
-          // Add more happy book recommendations as needed
+          Recommendation(
+            title: 'The Remains of the Day',
+            imageUrl: 'lib/images/trotd.png',
+            description: 'A poignant novel about an English butler reflecting on a life of service and the changing world around him.',
+          ),
         ];
       case 'Movies':
         return [
           Recommendation(
             title: 'The Pursuit of Happyness',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/tpoh.png',
             description: 'A biographical drama about overcoming life challenges.',
           ),
           Recommendation(
             title: 'La La Land',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/lll.png',
             description: 'A musical that celebrates dreams and the pursuit of passion.',
           ),
-          // Add more happy movie recommendations as needed
+          Recommendation(
+            title: 'Amour',
+            imageUrl: 'lib/images/amour.png',
+            description: 'A deeply moving French film that delves into the complexities of love, aging, and mortality.',
+          ),
         ];
       case 'Songs':
         return [
           Recommendation(
             title: 'Happy - Pharrell Williams',
-            icon: Icons.music_note,
+            imageUrl: 'lib/images/happy.png',
             description: 'An upbeat song that spreads happiness.',
           ),
           Recommendation(
             title: 'Don\'t Worry, Be Happy - Bobby McFerrin',
-            icon: Icons.music_note,
+            imageUrl: 'lib/images/dwbh.png',
             description: 'A classic song with a positive message.',
           ),
-          // Add more happy song recommendations as needed
+         Recommendation(
+            title: 'Whats Going on - Marvin Gay',
+            imageUrl: 'lib/images/wgo.png',
+            description: 'A soulful and socially conscious anthem that remains relevant, addressing themes of war and injustice.',
+          ),
         ];
       default:
         return [];
@@ -419,43 +398,55 @@ class _HomePageState extends State<HomePage> {
         return [
           Recommendation(
             title: 'The Fault in Our Stars',
-            icon: Icons.book,
+            imageUrl: 'lib/images/tfios.png',
             description: 'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
           ),
           Recommendation(
             title: 'A Little Life',
-            icon: Icons.book,
+            imageUrl: 'lib/images/all.png',
             description: 'A novel that explores the profound effects of trauma and the power of friendship.',
           ),
-          // Add more sad book recommendations as needed
+         Recommendation(
+            title: 'Never Let Me Go',
+            imageUrl: 'lib/images/nlmg.png',
+            description: 'Kazuo Ishiguros haunting exploration of love, loss, and the ethics of a dystopian society.',
+          ),
         ];
       case 'Movies':
         return [
           Recommendation(
             title: 'Schindler\'s List',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/sl.png',
             description: 'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
           ),
           Recommendation(
             title: 'Life is Beautiful',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/lib.png',
             description: 'An Italian film about a father\'s attempt to shelter his son from the horrors of a concentration camp.',
           ),
-          // Add more sad movie recommendations as needed
+         Recommendation(
+            title: 'Requiem for a Dream',
+            imageUrl: 'lib/images/rfad.png',
+            description: ' A visceral and intense film portraying the destructive impact of addiction on individuals and their relationships.',
+          ),
         ];
       case 'Songs':
         return [
           Recommendation(
             title: 'Someone Like You - Adele',
-            icon: Icons.music_note,
+            imageUrl: 'lib/images/sly.png',
             description: 'A soulful song about heartbreak and lost love.',
           ),
           Recommendation(
             title: 'Tears in Heaven - Eric Clapton',
-            icon: Icons.music_note,
+            imageUrl: 'lib/images/tih.png',
             description: 'A poignant song expressing grief and loss.',
           ),
-          // Add more sad song recommendations as needed
+         Recommendation(
+            title: 'Hallelujah - Jeff Buckley',
+            imageUrl: 'lib/images/jeff.png',
+            description: 'A soulful and melancholic rendition of Leonard Cohens classic, expressing the complexities of love and spirituality.',
+          ),
         ];
       default:
         return [];
@@ -468,43 +459,55 @@ class _HomePageState extends State<HomePage> {
         return [
           Recommendation(
             title: 'The Girl with the Dragon Tattoo',
-            icon: Icons.book,
+            imageUrl: 'lib/images/tgwtdt.png',
             description: 'A gripping mystery novel with a cool and resourceful protagonist.',
           ),
           Recommendation(
             title: 'Ready Player One',
-            icon: Icons.book,
+            imageUrl: 'lib/images/rp1.png',
             description: 'A science fiction adventure set in a virtual reality world.',
           ),
-          // Add more cool book recommendations as needed
+         Recommendation(
+            title: 'The Big Sleep',
+            imageUrl: 'lib/images/tbs.png',
+            description: 'Raymond Chandlers classic noir novel featuring the cool and enigmatic private detective Philip Marlowe.',
+          ),
         ];
       case 'Movies':
         return [
           Recommendation(
             title: 'The Matrix',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/matrix.png',
             description: 'A sci-fi classic that explores the concept of reality and virtual worlds.',
           ),
           Recommendation(
             title: 'Drive',
-            icon: Icons.movie,
+            imageUrl: 'lib/images/drive.png',
             description: 'A stylish and cool film about a stuntman who moonlights as a getaway driver.',
           ),
-          // Add more cool movie recommendations as needed
+           Recommendation(
+            title: 'Heat',
+            imageUrl: 'lib/images/heat.png',
+            description: 'A crime thriller with a cool ensemble cast, exploring the lives of criminals and detectives on opposite sides of the law.',
+          ),
         ];
       case 'Songs':
         return [
           Recommendation(
             title: 'Smooth Operator - Sade',
-            icon: Icons.music_note,
+            imageUrl: 'lib/images/so.png',
             description: 'A smooth and cool jazz-pop song.',
           ),
           Recommendation(
-            title: 'Chill Out - Ray Charles',
-            icon: Icons.music_note,
+            title: 'Hit The Road Jack - Ray Charles',
+            imageUrl: 'lib/images/htrj.png',
             description: 'A laid-back and cool song by the legendary Ray Charles.',
           ),
-          // Add more cool song recommendations as needed
+          Recommendation(
+            title: 'Royals - Lorde',
+            imageUrl: 'lib/images/royals.png',
+            description: 'A minimalist and stylish pop anthem with Lordes cool and distinctive vocals.',
+          ),
         ];
       default:
         return [];
@@ -517,71 +520,109 @@ class _HomePageState extends State<HomePage> {
         return [
           Recommendation(
             title: 'Fight Club',
-            icon: Icons.book,
+            imageUrl: 'lib/images/fc.png',
             description: 'A novel that explores the disillusionment and anger of modern life.',
           ),
           Recommendation(
             title: 'The Girl on the Train',
-            icon: Icons.book,
+            imageUrl: 'lib/images/tgott.png',
             description: 'A psychological thriller with themes of betrayal and anger.',
           ),
-        // Add more angry book recommendations as needed
-      ];
-    case 'Movies':
-      return [
-        Recommendation(
-          title: 'American History X',
-          icon: Icons.movie,
-          description: 'A film that delves into the roots of racism and anger in America.',
-        ),
-        Recommendation(
-          title: 'Taxi Driver',
-          icon: Icons.movie,
-          description: 'A classic film depicting the descent into anger and violence.',
-        ),
-        // Add more angry movie recommendations as needed
-      ];
-    case 'Songs':
-      return [
-        Recommendation(
-          title: 'Killing in the Name - Rage Against the Machine',
-          icon: Icons.music_note,
-          description: 'A powerful protest song expressing anger against authority.',
-        ),
-        Recommendation(
-          title: 'Break Stuff - Limp Bizkit',
-          icon: Icons.music_note,
-          description: 'An intense song reflecting frustration and anger.',
-        ),
-        // Add more angry song recommendations as needed
-      ];
-    default:
-      return [];
+          Recommendation(
+            title: 'One Flew Over the Cuckoos Nest',
+            imageUrl: 'lib/images/ofotcn.png',
+            description: 'A classic novel that critiques societal norms through the experiences of patients in a mental institution.',
+          ),
+        ];
+      case 'Movies':
+        return [
+          Recommendation(
+            title: 'American History X',
+            imageUrl: 'lib/images/ahx.png',
+            description: 'A film that delves into the roots of racism and anger in America.',
+          ),
+          Recommendation(
+            title: 'Taxi Driver',
+            imageUrl: 'lib/images/td.png',
+            description: 'A classic film depicting the descent into anger and violence.',
+          ),
+           Recommendation(
+            title: 'Se7en',
+            imageUrl: 'lib/images/seven.png',
+            description: 'A gritty and psychological crime thriller that explores the darkest aspects of human nature.',
+          ),
+        ];
+      case 'Songs':
+        return [
+          Recommendation(
+            title: 'Killing in the Name - Rage Against the Machine',
+            imageUrl: 'lib/images/kitn.png',
+            description: 'A powerful protest song expressing anger against authority.',
+          ),
+          Recommendation(
+            title: 'Break Stuff - Limp Bizkit',
+            imageUrl: 'lib/images/bs.png',
+            description: 'An intense song reflecting frustration and anger.',
+          ),
+         Recommendation(
+            title: 'Down with the Sickness - Disturbed',
+            imageUrl: 'lib/images/dwts.png',
+            description: 'An intense and aggressive metal song expressing frustration and disillusionment.',
+          ),
+        ];
+      default:
+        return [];
+    }
   }
 }
-}
 
+class JournalPage extends StatelessWidget {
+  final List<String> journalEntries;
 
-  void _startMeditationTimer(BuildContext context, int minutes) async {
-    await Future.delayed(Duration(minutes: minutes));
+  const JournalPage({Key? key, required this.journalEntries}) : super(key: key);
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Congratulations!'),
-        content: Text('You have completed your meditation session.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: Text('OK'),
-          ),
-        ],
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Journal Page'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Journal Entries',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: journalEntries.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Card(
+                      elevation: 3,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          journalEntries[index],
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
-
+}
 
 class RecommendationCard extends StatelessWidget {
   final Recommendation recommendation;
@@ -590,26 +631,39 @@ class RecommendationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: GestureDetector(
-          onTap: () => showRecommendationDetails(context, recommendation),
-          child: Column(
-            children: [
-              Icon(recommendation.icon, size: 40, color: Colors.purpleAccent),
-              SizedBox(height: 8),
-              Text(
+    return GestureDetector(
+      onTap: () => showRecommendationDetails(context, recommendation),
+      child: Container(
+        margin: EdgeInsets.symmetric(vertical: 25),
+        height: 300, // Set the desired height
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
+            image: AssetImage(recommendation.imageUrl),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
                 recommendation.title,
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.black,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -626,13 +680,16 @@ class RecommendationCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              height: 100,
+              height: 200, // Adjust the height as needed
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(recommendation.imageUrl),
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Icon(recommendation.icon, size: 60, color: Colors.purpleAccent),
             ),
             SizedBox(height: 8),
             Text(recommendation.description),
@@ -649,14 +706,16 @@ class RecommendationCard extends StatelessWidget {
   }
 }
 
+
+
 class Recommendation {
   final String title;
-  final IconData icon;
+  final String imageUrl;
   final String description;
 
   Recommendation({
     required this.title,
-    required this.icon,
+    required this.imageUrl,
     required this.description,
   });
 }
