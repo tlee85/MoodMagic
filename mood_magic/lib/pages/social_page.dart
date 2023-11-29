@@ -9,7 +9,7 @@ class SocialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(207, 204, 251, 1),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: ListView.builder(
@@ -66,7 +66,7 @@ class SocialPage extends StatelessWidget {
             margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: const Color.fromRGBO(207, 204, 251, 1),
+              color: Color.fromARGB(255, 248, 248, 248),
             ),
             child: Row(
               children: [
