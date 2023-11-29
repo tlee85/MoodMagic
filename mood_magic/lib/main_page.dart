@@ -49,7 +49,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         centerTitle: true,
-        title: Image(image: image, height: 118, width: 180), // Adjust the height and width as needed
+        title: Image(image: image, height: 118, width: 180), 
       ),
       drawer: const MyDrawer(),
       body: _pages[_selectedIndex],

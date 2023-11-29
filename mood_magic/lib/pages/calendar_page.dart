@@ -23,7 +23,7 @@ class _CalendarPageState extends State<CalendarPage> {
     Colors.blue, // Sad
     Colors.red, // Angry
     Colors.orange, // Cool
-  ]; // Sample mood colors
+  ]; 
 
   @override
   void initState() {
@@ -56,13 +56,13 @@ class _CalendarPageState extends State<CalendarPage> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                // Display selected mood emoji
+           
                 Text(
                   moodEmojis[_selectedMoodIndex],
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(width: 8),
-                // Emoji selection arrow buttons
+             
                 IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
@@ -149,10 +149,10 @@ class _CalendarPageState extends State<CalendarPage> {
       _moodColorsMap[_selectedDay] = moodColors[_selectedMoodIndex];
     });
 
-    // Save mood colors to SharedPreferences
+   
     _saveMoodColorsToPrefs();
 
-    // Debug print to check if the function is called
+   
     print('Mood colors saved: $_moodColorsMap');
   }
 
@@ -196,9 +196,7 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   String _getEmojiForColor(Color color) {
-    // Depending on your color-to-emoji mapping, implement this method
-    // to return the corresponding emoji for a given color.
-    // This is just a placeholder and may not be accurate for your use case.
+
     if (color == Colors.green) {
       return '😊';
     } else if (color == Colors.blue) {
@@ -208,7 +206,7 @@ class _CalendarPageState extends State<CalendarPage> {
     } else if (color == Colors.orange) {
       return '😎';
     } else {
-      return '❓'; // Placeholder for unknown color
+      return '❓'; 
     }
   }
 }

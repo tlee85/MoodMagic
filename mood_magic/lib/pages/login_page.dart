@@ -4,26 +4,6 @@ import '../components/my_login_button.dart';
 import '../components/my_square_tile.dart';
 import '../components/my_textfield.dart';
 
-/*
-
-L O G I N P A G E
-
-This is the LoginPage, the first page the user will see based off what was configured in the main.dart file.
-This is a minimal aesthetic design, but feel free to decorate it to fit your app.
-
-When considering loggin users into your app, you must consider AUTHENTICATION:
-
-- email sign in
-- google sign in
-- apple sign in
-- facebook sign in, etc
-
-There are many authentication services including firebase. This is highly dependent on your needs.
-
-Once the user is authenticated, they are directed to the homepage.
-
-*/
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -32,14 +12,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // text editing controllers
+  
   final usernameController = TextEditingController();
 
   final passwordController = TextEditingController();
 
   // sign user in method
   void signUserIn() {
-    // once user is authenticated, direct them to the main page
+
     Navigator.pop(context);
     Navigator.push(
       context,
@@ -70,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 50),
 
-                // welcome back, you've been missed!
+                
                 Text(
                   'Welcome back you\'ve been missed!',
                   style: TextStyle(
@@ -81,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 25),
 
-                // username textfield
+               
                 MyTextField(
                   controller: usernameController,
                   hintText: 'Username',
@@ -90,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 10),
 
-                // password textfield
+                
                 MyTextField(
                   controller: passwordController,
                   hintText: 'Password',
@@ -99,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 10),
 
-                // forgot password?
+                
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -115,14 +95,14 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 25),
 
-                // sign in button
+                
                 MyButton(
                   onTap: signUserIn,
                 ),
 
                 const SizedBox(height: 50),
 
-                // or continue with
+               
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -152,16 +132,16 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 50),
 
-                // google + apple sign in buttons
+                
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                    // google button
+                   
                     SquareTile(imagePath: 'lib/images/google.png'),
 
                     SizedBox(width: 25),
 
-                    // apple button
+                    
                     SquareTile(imagePath: 'lib/images/apple.png')
                   ],
                 ),

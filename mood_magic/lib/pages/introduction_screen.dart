@@ -17,7 +17,7 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Track how you are feeling day to day and be able to access your journal and moods as you go ',
               image: buildImage("lib/images/read.png"),
-              //getPageDecoration, a method to customise the page style
+           
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -25,7 +25,7 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Connect with people with similar feelings to you. See what people have as their comfort movies, songs, or books when they are feeling down, angry, or another feeling',
               image: buildImage("lib/images/think.png"),
-              //getPageDecoration, a method to customise the page style
+             
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -33,7 +33,7 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Find the quote of the day and take a breather. Goals you make yourself and magic goals per day, achieve them all',
               image: buildImage("lib/images/meditate.png"),
-              //getPageDecoration, a method to customise the page style
+             
               decoration: getPageDecoration(),
             ),
           ],
@@ -48,7 +48,7 @@ class IntroductionScreens extends StatelessWidget {
               ),
             );
           },
-          //ClampingScrollPhysics prevent the scroll offset from exceeding the bounds of the content.
+         
           scrollPhysics: const ClampingScrollPhysics(),
           showDoneButton: true,
           showNextButton: true,
@@ -73,11 +73,11 @@ class IntroductionScreens extends StatelessWidget {
     ));
   }
 
-  //method to customise the page style
+ 
   PageDecoration getPageDecoration() {
     return PageDecoration(
       imagePadding: EdgeInsets.only(top: 120),
-      // Use a Container with decoration to set the gradient background
+
       boxDecoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -86,7 +86,7 @@ class IntroductionScreens extends StatelessWidget {
             Colors.white,
             const Color.fromRGBO(207, 204, 251, .7),
             const Color.fromRGBO(234, 255, 241, 1)
-          ], // Adjust the colors as needed
+          ],
         ),
       ),
       bodyPadding: EdgeInsets.only(top: 8, left: 20, right: 20),
@@ -95,7 +95,6 @@ class IntroductionScreens extends StatelessWidget {
     );
   }
 
-  //method to customize the dots style
   DotsDecorator getDotsDecorator() {
     return const DotsDecorator(
       spacing: EdgeInsets.symmetric(horizontal: 2),

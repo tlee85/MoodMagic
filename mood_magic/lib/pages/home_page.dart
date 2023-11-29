@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   PageController _pageController = PageController();
 
   String currentMood = '😊';
-  List<String> journalEntries = List.filled(7, '');
+ List<String> journalEntries = []; // Change this line
 
   @override
   Widget build(BuildContext context) {
@@ -625,6 +625,7 @@ class _JournalPageState extends State<JournalPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Journal Page'),
+        backgroundColor: Color.fromRGBO(139, 76, 252, 50),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -682,6 +683,7 @@ class _JournalPageState extends State<JournalPage> {
                 }
               },
               child: Text('Save Entry'),
+             
             ),
           ],
         ),
@@ -704,7 +706,7 @@ class RecommendationCard extends StatelessWidget {
       onTap: () => showRecommendationDetails(context, recommendation),
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 25),
-        height: 300, // Set the desired height
+        height: 300, 
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(

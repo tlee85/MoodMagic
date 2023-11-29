@@ -345,7 +345,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
               ),
               child: CircleAvatar(
                 backgroundImage:
-                    widget.profileImage, // Use widget.profileImage here
+                    widget.profileImage, 
                 radius: 20,
               ),
             ),
@@ -382,7 +382,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                   child: TextField(
                     controller: _messageController,
                     onChanged: (text) {
-                      // Add your logic to update the message text
+                     
                     },
                     decoration: InputDecoration(
                       hintText: 'Type your message...',
@@ -392,7 +392,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    // Add your logic to send the message
+                    
                     sendMessage(_messageController.text);
                     _messageController.clear();
                   },

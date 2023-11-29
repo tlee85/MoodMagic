@@ -141,16 +141,16 @@ class _ProfilePageState extends State<ProfilePage> {
         _buildOptionButton(
           title: 'Change Email',
           onPressed: () {
-            // Open the email change dialog
+           
             showChangeEmailDialog(context);
           },
         ),
 
-        // Change Password Option
+        
         _buildOptionButton(
           title: 'Change Password',
           onPressed: () {
-            // Open the password change dialog
+           
             showChangePasswordDialog(context);
           },
         ),
@@ -166,16 +166,16 @@ class _ProfilePageState extends State<ProfilePage> {
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
         onPrimary: Colors.black,
-        elevation: 5, // Add a drop shadow effect
-        padding: EdgeInsets.zero, // Set padding to zero
+        elevation: 5, 
+        padding: EdgeInsets.zero, 
       ),
       child: Container(
-        padding: EdgeInsets.all(16), // Add padding inside the button content
-        alignment: Alignment.centerLeft, // Align text to the left
+        padding: EdgeInsets.all(16), 
+        alignment: Alignment.centerLeft, 
         child: Text(
           title,
           style: TextStyle(fontSize: 16),
-          textAlign: TextAlign.left, // Align text to the left
+          textAlign: TextAlign.left, 
         ),
       ),
     );
@@ -198,12 +198,12 @@ class _ProfilePageState extends State<ProfilePage> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    // Update the main profile picture with the selected one
+                    
                     setState(() {
                       _currentProfilePicture = getRandomIcon();
                     });
-                    _saveUserData(); // Save the updated user data
-                    Navigator.pop(context); // Close the dialog
+                    _saveUserData(); 
+                    Navigator.pop(context); 
                   },
                   child: Container(
                     margin: const EdgeInsets.all(8),
@@ -258,18 +258,18 @@ class _ProfilePageState extends State<ProfilePage> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context); // Close the dialog
+              Navigator.pop(context); 
             },
             child: Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
-              // Update the displayed username
+             
               setState(() {
                 _currentUsername = newUsername;
               });
-              _saveUserData(); // Save the updated user data
-              Navigator.pop(context); // Close the dialog
+              _saveUserData(); 
+              Navigator.pop(context); 
             },
             child: Text('Save'),
           ),
@@ -296,17 +296,17 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                // Update the displayed email
+                
                 setState(() {
                   _currentEmail = newEmail;
                 });
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Save'),
             ),
@@ -332,17 +332,17 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                // Update the displayed email
+                
                 setState(() {
                   _currentPassword = newPassword;
                 });
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Save'),
             ),
@@ -419,9 +419,9 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Notifications'),
           subtitle: Text('Receive alerts and updates'),
           trailing: Switch(
-            value: true, // Placeholder value, you should use a variable to control the state
+            value: true, 
             onChanged: (value) {
-              // Add logic to handle notification setting change
+              
               print('Notifications switched: $value');
             },
           ),
@@ -430,9 +430,9 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Dark Mode'),
           subtitle: Text('Enable or disable dark mode'),
           trailing: Switch(
-            value: true, // Placeholder value, you should use a variable to control the state
+            value: true, 
             onChanged: (value) {
-              // Add logic to handle dark mode setting change
+             
               print('Dark Mode switched: $value');
             },
           ),
@@ -441,7 +441,7 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Language'),
           subtitle: Text('Select your preferred language'),
           onTap: () {
-            // Add logic to open language selection
+          
             print('Language tapped');
           },
         ),
@@ -471,7 +471,7 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Show a confirmation pop-up
+              
               showPurchaseConfirmation(context);
             },
             child: Text('Upgrade to Magic+'),
@@ -490,17 +490,15 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-                // Perform the purchase logic here
-                // You can integrate with in-app purchase libraries or handle it according to your requirements
-                // For simplicity, print a message for now
+              
                 print('Purchase confirmed');
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Confirm'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); 
               },
               child: Text('Cancel'),
             ),
