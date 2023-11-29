@@ -5,7 +5,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromRGBO(207, 204, 251, 1),
+      backgroundColor: Colors.white, // Set the background color here
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -51,14 +51,19 @@ class _HomePageState extends State<HomePage> {
                   ),
                   IconButton(
                     icon: Icon(Icons.add),
-                    onPressed: () {
-                      Navigator.push(
+                    onPressed: () async {
+                      var result = await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               JournalPage(journalEntries: journalEntries),
                         ),
                       );
+                      if (result != null && result is String) {
+                        setState(() {
+                          journalEntries.add(result);
+                        });
+                      }
                     },
                     color: Colors.black,
                   ),
@@ -128,6 +133,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+
   IconData getMoodIcon(String mood) {
     switch (mood) {
       case '😊':
@@ -143,51 +149,42 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget buildRecommendationSection(
-      String category, List<Recommendation> recommendations) {
-    double containerHeight = MediaQuery.of(context).size.width / 665 * 1000;
+  Widget buildRecommendationSection(String category, List<Recommendation> recommendations) {
+  double containerHeight = 250.0; 
+  double containerWidth = 150.0; 
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3),
-              ),
-            ],
-            color: Colors.white,
-          ),
-          child: Text(
-            '$category Recommendations',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 8, bottom: 8),
+        child: Text(
+          '$category Recommendations',
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
         ),
-        SizedBox(height: 12),
-        Container(
-          height: containerHeight, // Set the height based on the aspect ratio
-          child: PageView.builder(
-            controller: _pageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: recommendations.length,
-            itemBuilder: (context, index) {
-              return RecommendationCard(recommendation: recommendations[index]);
-            },
-          ),
+      ),
+      SizedBox(height: 12),
+      Container(
+        height: containerHeight,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: recommendations.length,
+          itemBuilder: (context, index) {
+            return Container(
+              width: containerWidth,
+              margin: EdgeInsets.symmetric(horizontal: 8),
+              child: RecommendationCard(recommendation: recommendations[index]),
+            );
+          },
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   Widget buildCard({required Widget child}) {
     return Card(
@@ -610,10 +607,18 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class JournalPage extends StatelessWidget {
+class JournalPage extends StatefulWidget {
   final List<String> journalEntries;
 
   const JournalPage({Key? key, required this.journalEntries}) : super(key: key);
+
+  @override
+  _JournalPageState createState() => _JournalPageState();
+}
+
+class _JournalPageState extends State<JournalPage> {
+  TextEditingController _notesController = TextEditingController();
+  PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -632,8 +637,9 @@ class JournalPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Expanded(
-              child: ListView.builder(
-                itemCount: journalEntries.length,
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: widget.journalEntries.length,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 8),
@@ -642,7 +648,7 @@ class JournalPage extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
-                          journalEntries[index],
+                          widget.journalEntries[index],
                           style: TextStyle(fontSize: 16),
                         ),
                       ),
@@ -651,6 +657,32 @@ class JournalPage extends StatelessWidget {
                 },
               ),
             ),
+            SizedBox(height: 16),
+            TextField(
+              controller: _notesController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: 'Write your thoughts here...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                if (_notesController.text.isNotEmpty) {
+                  setState(() {
+                    widget.journalEntries.add(_notesController.text);
+                    _notesController.clear();
+                    _pageController.animateToPage(
+                      widget.journalEntries.length - 1,
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  });
+                }
+              },
+              child: Text('Save Entry'),
+            ),
           ],
         ),
       ),
@@ -658,6 +690,8 @@ class JournalPage extends StatelessWidget {
   }
 }
 
+
+ 
 class RecommendationCard extends StatelessWidget {
   final Recommendation recommendation;
 
