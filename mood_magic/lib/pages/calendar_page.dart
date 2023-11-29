@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +15,7 @@ class _CalendarPageState extends State<CalendarPage> {
   late DateTime _focusedDay;
   late DateTime _selectedDay;
   late SharedPreferences _prefs;
-  int _selectedMoodIndex = 0; // Index for the selected mood emoji
+  int _selectedMoodIndex = 0; 
   Map<DateTime, Color> _moodColorsMap = {};
 
   final List<String> moodEmojis = ['😊', '😢', '😡', '😎']; // Sample mood emojis
@@ -23,7 +24,7 @@ class _CalendarPageState extends State<CalendarPage> {
     Colors.blue, // Sad
     Colors.red, // Angry
     Colors.orange, // Cool
-  ]; 
+  ];
 
   @override
   void initState() {
@@ -39,6 +40,9 @@ class _CalendarPageState extends State<CalendarPage> {
         _selectedDay = DateTime.parse(_prefs.getString('selectedDay') ?? '');
         _selectedMoodIndex = _prefs.getInt('selectedMoodIndex') ?? 0;
         _moodColorsMap = _getMoodColorsFromPrefs();
+
+        // Fill in previous days with random mood emojis
+        _fillPreviousDays();
       });
     });
   }
@@ -56,13 +60,11 @@ class _CalendarPageState extends State<CalendarPage> {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-           
                 Text(
                   moodEmojis[_selectedMoodIndex],
                   style: TextStyle(fontSize: 20),
                 ),
                 SizedBox(width: 8),
-             
                 IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () {
@@ -104,7 +106,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 _focusedDay = focusedDay;
               });
             },
-            // Add the TableCellBuilder to customize each day cell
+           
             calendarBuilders: CalendarBuilders(
               markerBuilder: (context, day, events) {
                 if (_moodColorsMap.containsKey(day)) {
@@ -149,12 +151,30 @@ class _CalendarPageState extends State<CalendarPage> {
       _moodColorsMap[_selectedDay] = moodColors[_selectedMoodIndex];
     });
 
-   
+    
     _saveMoodColorsToPrefs();
 
-   
     print('Mood colors saved: $_moodColorsMap');
   }
+
+  void _fillPreviousDays() {
+  DateTime currentDate = DateTime.now();
+  DateTime firstDate = DateTime.utc(2023, 1, 1);
+
+  
+  for (DateTime date = firstDate; date.isBefore(currentDate); date = date.add(Duration(days: 1))) {
+    if (!_moodColorsMap.containsKey(date)) {
+      
+      int randomMoodIndex = Random().nextInt(moodEmojis.length);
+
+     
+      _moodColorsMap[date] = moodColors[randomMoodIndex];
+    }
+  }
+
+  
+  _saveMoodColorsToPrefs();
+}
 
   Map<DateTime, Color> _getMoodColorsFromPrefs() {
     Map<DateTime, Color> moodColorsMap = {};
@@ -196,7 +216,6 @@ class _CalendarPageState extends State<CalendarPage> {
   }
 
   String _getEmojiForColor(Color color) {
-
     if (color == Colors.green) {
       return '😊';
     } else if (color == Colors.blue) {
@@ -206,7 +225,7 @@ class _CalendarPageState extends State<CalendarPage> {
     } else if (color == Colors.orange) {
       return '😎';
     } else {
-      return '❓'; 
+      return '❓';
     }
   }
 }
