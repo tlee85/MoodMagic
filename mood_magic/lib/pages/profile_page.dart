@@ -12,10 +12,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late SharedPreferences _prefs;
 
-  String _currentEmail = 'john.doe@example.com'; // Initial email
-  String _currentUsername = 'JohnDoe'; // Initial username
-  String _currentPassword = 'password';// Initial password
-  IconData _currentProfilePicture = Icons.account_circle; // Initial profile picture
+  String _currentEmail = 'john.doe@example.com';
+  String _currentUsername = 'JohnDoe';
+  String _currentPassword = 'password';
+  String _currentProfilePicture = 'lib/images/nash.png';
 
   @override
   void initState() {
@@ -27,15 +27,14 @@ class _ProfilePageState extends State<ProfilePage> {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentUsername = _prefs.getString('username') ?? 'JohnDoe';
-      _currentProfilePicture =
-          IconData(_prefs.getInt('profilePicture') ?? Icons.account_circle.codePoint, fontFamily: 'MaterialIcons');
+      _currentProfilePicture = _prefs.getString('profilePicture') ?? 'lib/images/nash.png';
       _currentEmail = _prefs.getString('email') ?? 'john.doe@example.com';
     });
   }
 
   Future<void> _saveUserData() async {
     await _prefs.setString('username', _currentUsername);
-    await _prefs.setInt('profilePicture', _currentProfilePicture.codePoint);
+    await _prefs.setString('profilePicture', _currentProfilePicture);
     await _prefs.setString('email', _currentEmail);
   }
 
@@ -77,88 +76,82 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildAccountTabContent() {
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        // Profile Picture and Name Section
-        Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  // Open the profile picture selection dialog
-                  showProfilePictureSelectionDialog(context);
-                },
-                child: Container(
-                  height: 160,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.grey[200],
-                  ),
-                  child: Icon(
-                    _currentProfilePicture,
-                    size: 120,
-                    color: Colors.grey[500],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Profile Picture and Name Section
+          Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Open the profile picture selection dialog
+                    showProfilePictureSelectionDialog(context);
+                  },
+                  child: Container(
+                    height: 160,
+                    width: 160,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.grey[200],
+                    ),
+                    child: CircleAvatar(
+                      radius: 60,
+                      backgroundImage: AssetImage(_currentProfilePicture),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 20),
-              Column(
-                children: [
-                  Text(
-                    _currentUsername,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  // Additional information or buttons can be added here
-                ],
-              ),
-            ],
+                SizedBox(width: 20),
+                Column(
+                  children: [
+                    Text(
+                      _currentUsername,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
 
-        // Change Profile Picture Option
-        _buildOptionButton(
-          title: 'Change Profile Picture',
-          onPressed: () {
-            // Open the profile picture selection dialog
-            showProfilePictureSelectionDialog(context);
-          },
-        ),
+          // Change Profile Picture Option
+          _buildOptionButton(
+            title: 'Change Profile Picture',
+            onPressed: () {
+              // Open the profile picture selection dialog
+              showProfilePictureSelectionDialog(context);
+            },
+          ),
 
-        // Change Username Option
-        _buildOptionButton(
-          title: 'Change Username',
-          onPressed: () {
-            // Open the username change dialog
-            showChangeUsernameDialog(context);
-          },
-        ),
+          // Change Username Option
+          _buildOptionButton(
+            title: 'Change Username',
+            onPressed: () {
+              // Open the username change dialog
+              showChangeUsernameDialog(context);
+            },
+          ),
 
-        // Change Email Option
-        _buildOptionButton(
-          title: 'Change Email',
-          onPressed: () {
-           
-            showChangeEmailDialog(context);
-          },
-        ),
+          // Change Email Option
+          _buildOptionButton(
+            title: 'Change Email',
+            onPressed: () {
+              showChangeEmailDialog(context);
+            },
+          ),
 
-        
-        _buildOptionButton(
-          title: 'Change Password',
-          onPressed: () {
-           
-            showChangePasswordDialog(context);
-          },
-        ),
-      ],
-    ),
-  );
-}
-
+          _buildOptionButton(
+            title: 'Change Password',
+            onPressed: () {
+              showChangePasswordDialog(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
     return ElevatedButton(
@@ -166,16 +159,16 @@ class _ProfilePageState extends State<ProfilePage> {
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
         onPrimary: Colors.black,
-        elevation: 5, 
-        padding: EdgeInsets.zero, 
+        elevation: 5,
+        padding: EdgeInsets.zero,
       ),
       child: Container(
-        padding: EdgeInsets.all(16), 
-        alignment: Alignment.centerLeft, 
+        padding: EdgeInsets.all(16),
+        alignment: Alignment.centerLeft,
         child: Text(
           title,
           style: TextStyle(fontSize: 16),
-          textAlign: TextAlign.left, 
+          textAlign: TextAlign.left,
         ),
       ),
     );
@@ -194,16 +187,15 @@ class _ProfilePageState extends State<ProfilePage> {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
               ),
-              itemCount: 9,
+              itemCount: 7,
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    
                     setState(() {
-                      _currentProfilePicture = getRandomIcon();
+                      _currentProfilePicture = getProfilePictureForIndex(index);
                     });
-                    _saveUserData(); 
-                    Navigator.pop(context); 
+                    _saveUserData();
+                    Navigator.pop(context);
                   },
                   child: Container(
                     margin: const EdgeInsets.all(8),
@@ -211,10 +203,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       borderRadius: BorderRadius.circular(8),
                       color: Colors.grey[200],
                     ),
-                    child: Icon(
-                      getRandomIcon(),
-                      size: 60,
-                      color: Colors.grey[500],
+                    child: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(getProfilePictureForIndex(index)),
                     ),
                   ),
                 );
@@ -226,59 +217,59 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  IconData getRandomIcon() {
-    final List<IconData> icons = [
-      Icons.face,
-      Icons.pets,
-      Icons.accessibility,
-      Icons.star,
-      Icons.favorite,
-      Icons.cake,
-      Icons.school,
-      Icons.work,
-      Icons.food_bank,
+  String getProfilePictureForIndex(int index) {
+    final List<String> profilePictures = [
+      'lib/images/nash.png',
+      'lib/images/racc.png',
+      'lib/images/bint.png',
+      'lib/images/beetle.png',
+      'lib/images/treeball.png',
+      'lib/images/natheart.png',
+      'lib/images/logos.png',
     ];
-    final Random random = Random();
-    return icons[random.nextInt(icons.length)];
+
+    if (index < profilePictures.length) {
+      return profilePictures[index];
+    }
+
+    return 'lib/images/nash.png'; // Return a default image in case of an out-of-bounds index
   }
 
   void showChangeUsernameDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      String newUsername = _currentUsername;
-      return AlertDialog(
-        title: Text('Change Username'),
-        content: TextField(
-          decoration: InputDecoration(labelText: 'New Username'),
-          onChanged: (value) {
-            newUsername = value;
-          },
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); 
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        String newUsername = _currentUsername;
+        return AlertDialog(
+          title: Text('Change Username'),
+          content: TextField(
+            decoration: InputDecoration(labelText: 'New Username'),
+            onChanged: (value) {
+              newUsername = value;
             },
-            child: Text('Cancel'),
           ),
-          TextButton(
-            onPressed: () {
-             
-              setState(() {
-                _currentUsername = newUsername;
-              });
-              _saveUserData(); 
-              Navigator.pop(context); 
-            },
-            child: Text('Save'),
-          ),
-        ],
-      );
-    },
-  );
-}
-
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  _currentUsername = newUsername;
+                });
+                _saveUserData();
+                Navigator.pop(context);
+              },
+              child: Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   void showChangeEmailDialog(BuildContext context) {
     showDialog(
@@ -296,17 +287,16 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                
                 setState(() {
                   _currentEmail = newEmail;
                 });
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Save'),
             ),
@@ -332,17 +322,16 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                
                 setState(() {
                   _currentPassword = newPassword;
                 });
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Save'),
             ),
@@ -371,33 +360,27 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(height: 20),
         _buildHelpItem(
           title: 'National Suicide Prevention Lifeline',
-          description:
-              'Call 1-800-273-TALK (1-800-273-8255) if you or someone you know is in crisis.',
+          description: 'Call 1-800-273-TALK (1-800-273-8255) if you or someone you know is in crisis.',
         ),
         _buildHelpItem(
           title: 'Crisis Text Line',
-          description:
-              'Text "HELLO" to 741741 to connect with a trained crisis counselor.',
+          description: 'Text "HELLO" to 741741 to connect with a trained crisis counselor.',
         ),
         _buildHelpItem(
           title: 'Therapy and Counseling',
-          description:
-              'Consider seeking professional help from a therapist or counselor. Mood Magic can help you find local resources.',
+          description: 'Consider seeking professional help from a therapist or counselor. Mood Magic can help you find local resources.',
         ),
         _buildHelpItem(
           title: 'Self-Help Resources',
-          description:
-              'Explore self-help books, apps, and online resources that focus on mental health and well-being.',
+          description: 'Explore self-help books, apps, and online resources that focus on mental health and well-being.',
         ),
         _buildHelpItem(
           title: 'Mood Tracking',
-          description:
-              'Use Mood Magic\'s mood tracking feature to monitor and understand your emotions over time.',
+          description: 'Use Mood Magic\'s mood tracking feature to monitor and understand your emotions over time.',
         ),
         _buildHelpItem(
           title: 'Diary Feature',
-          description:
-              'Take advantage of the diary feature to jot down your thoughts and feelings. It can be a helpful way to express yourself and track your mental health journey.',
+          description: 'Take advantage of the diary feature to jot down your thoughts and feelings. It can be a helpful way to express yourself and track your mental health journey.',
         ),
       ],
     );
@@ -419,9 +402,8 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Notifications'),
           subtitle: Text('Receive alerts and updates'),
           trailing: Switch(
-            value: true, 
+            value: true,
             onChanged: (value) {
-              
               print('Notifications switched: $value');
             },
           ),
@@ -430,9 +412,8 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Dark Mode'),
           subtitle: Text('Enable or disable dark mode'),
           trailing: Switch(
-            value: true, 
+            value: true,
             onChanged: (value) {
-             
               print('Dark Mode switched: $value');
             },
           ),
@@ -441,7 +422,6 @@ class _ProfilePageState extends State<ProfilePage> {
           title: Text('Language'),
           subtitle: Text('Select your preferred language'),
           onTap: () {
-          
             print('Language tapped');
           },
         ),
@@ -471,7 +451,6 @@ class _ProfilePageState extends State<ProfilePage> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              
               showPurchaseConfirmation(context);
             },
             child: Text('Upgrade to Magic+'),
@@ -480,6 +459,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
   void showPurchaseConfirmation(BuildContext context) {
     showDialog(
       context: context,
@@ -490,15 +470,14 @@ class _ProfilePageState extends State<ProfilePage> {
           actions: [
             TextButton(
               onPressed: () {
-              
                 print('Purchase confirmed');
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Confirm'),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); 
+                Navigator.pop(context);
               },
               child: Text('Cancel'),
             ),
