@@ -185,7 +185,7 @@ class FriendsPage extends StatelessWidget {
 
 AssetImage getSequentialImage(int index) {
   List<String> imagePaths = [
-    'lib/images/nash.png',
+    'lib/images/beetle.png',
     'lib/images/astro.png',
     'lib/images/mike.png',
     'lib/images/racc.png',
@@ -344,8 +344,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                 ),
               ),
               child: CircleAvatar(
-                backgroundImage:
-                    widget.profileImage, 
+                backgroundImage: widget.profileImage,
                 radius: 20,
               ),
             ),
@@ -381,9 +380,7 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                 Expanded(
                   child: TextField(
                     controller: _messageController,
-                    onChanged: (text) {
-                     
-                    },
+                    onChanged: (text) {},
                     decoration: InputDecoration(
                       hintText: 'Type your message...',
                     ),
@@ -392,7 +389,6 @@ class _MessageThreadPageState extends State<MessageThreadPage> {
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    
                     sendMessage(_messageController.text);
                     _messageController.clear();
                   },

@@ -15,7 +15,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String _currentEmail = 'john.doe@example.com';
   String _currentUsername = 'JohnDoe';
   String _currentPassword = 'password';
-  String _currentProfilePicture = 'lib/images/nash.png';
+  String _currentProfilePicture = 'lib/images/racc.png';
 
   @override
   void initState() {
@@ -27,7 +27,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
       _currentUsername = _prefs.getString('username') ?? 'JohnDoe';
-      _currentProfilePicture = _prefs.getString('profilePicture') ?? 'lib/images/nash.png';
+      _currentProfilePicture =
+          _prefs.getString('profilePicture') ?? 'lib/images/nash.png';
       _currentEmail = _prefs.getString('email') ?? 'john.doe@example.com';
     });
   }
@@ -153,7 +154,8 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildOptionButton({required String title, required VoidCallback onPressed}) {
+  Widget _buildOptionButton(
+      {required String title, required VoidCallback onPressed}) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -205,7 +207,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     child: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage(getProfilePictureForIndex(index)),
+                      backgroundImage:
+                          AssetImage(getProfilePictureForIndex(index)),
                     ),
                   ),
                 );
@@ -360,27 +363,33 @@ class _ProfilePageState extends State<ProfilePage> {
         const SizedBox(height: 20),
         _buildHelpItem(
           title: 'National Suicide Prevention Lifeline',
-          description: 'Call 1-800-273-TALK (1-800-273-8255) if you or someone you know is in crisis.',
+          description:
+              'Call 1-800-273-TALK (1-800-273-8255) if you or someone you know is in crisis.',
         ),
         _buildHelpItem(
           title: 'Crisis Text Line',
-          description: 'Text "HELLO" to 741741 to connect with a trained crisis counselor.',
+          description:
+              'Text "HELLO" to 741741 to connect with a trained crisis counselor.',
         ),
         _buildHelpItem(
           title: 'Therapy and Counseling',
-          description: 'Consider seeking professional help from a therapist or counselor. Mood Magic can help you find local resources.',
+          description:
+              'Consider seeking professional help from a therapist or counselor. Mood Magic can help you find local resources.',
         ),
         _buildHelpItem(
           title: 'Self-Help Resources',
-          description: 'Explore self-help books, apps, and online resources that focus on mental health and well-being.',
+          description:
+              'Explore self-help books, apps, and online resources that focus on mental health and well-being.',
         ),
         _buildHelpItem(
           title: 'Mood Tracking',
-          description: 'Use Mood Magic\'s mood tracking feature to monitor and understand your emotions over time.',
+          description:
+              'Use Mood Magic\'s mood tracking feature to monitor and understand your emotions over time.',
         ),
         _buildHelpItem(
           title: 'Diary Feature',
-          description: 'Take advantage of the diary feature to jot down your thoughts and feelings. It can be a helpful way to express yourself and track your mental health journey.',
+          description:
+              'Take advantage of the diary feature to jot down your thoughts and feelings. It can be a helpful way to express yourself and track your mental health journey.',
         ),
       ],
     );
@@ -466,7 +475,8 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirm Purchase'),
-          content: Text('Are you sure you want to upgrade to Magic+ for \$5 a month?'),
+          content: Text(
+              'Are you sure you want to upgrade to Magic+ for \$5 a month?'),
           actions: [
             TextButton(
               onPressed: () {
