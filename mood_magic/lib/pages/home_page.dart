@@ -405,10 +405,10 @@ class _HomePageState extends State<HomePage> {
       case 'Books':
         return [
           Recommendation(
-            title: 'The Fault in Our Stars',
-            imageUrl: 'lib/images/tfios.png',
+            title: 'The Alchemist',
+            imageUrl: 'lib/images/ta.png',
             description:
-                'A heartbreaking novel about two cancer-stricken teenagers falling in love.',
+                'A philosophical novel that tells the story of Santiago, a shepherd boy, on his journey to find his personal legend and discover the meaning of life.',
           ),
           Recommendation(
             title: 'A Little Life',
@@ -426,10 +426,10 @@ class _HomePageState extends State<HomePage> {
       case 'Movies':
         return [
           Recommendation(
-            title: 'Schindler\'s List',
-            imageUrl: 'lib/images/sl.png',
+            title: 'Up',
+            imageUrl: 'lib/images/up.png',
             description:
-                'A powerful film depicting the true story of a man who saved hundreds of Jews during the Holocaust.',
+                'Up (2009) is an animated adventure that follows an elderly widower and a young boy as they embark on a heartwarming journey in a house suspended by balloons to fulfill the dream of the mans late wife.',
           ),
           Recommendation(
             title: 'Life is Beautiful',

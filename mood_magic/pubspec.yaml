@@ -86,6 +86,8 @@ flutter:
     - lib/images/treeball.png
     - lib/images/natheart.png
     - lib/images/logos.png
+    - lib/images/up.png
+    - lib/images/ta.png
     
 
  
