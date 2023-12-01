@@ -27,14 +27,14 @@ class AboutPage extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     'Welcome to Mood Magic!',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'Mood Magic was designed for young adults who struggle dealing with stress, to manage their mental health with recommendations and user-to-user communication chosen by our unique algorithms.',
                     textAlign: TextAlign.center,
@@ -54,7 +54,7 @@ class AboutPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Give Feedback',
                       style: TextStyle(
                         color: Colors.white,

@@ -17,7 +17,6 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Track how you are feeling day to day and be able to access your journal and moods as you go ',
               image: buildImage("lib/images/read.png"),
-           
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -25,7 +24,6 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Connect with people with similar feelings to you. See what people have as their comfort movies, songs, or books when they are feeling down, angry, or another feeling',
               image: buildImage("lib/images/think.png"),
-             
               decoration: getPageDecoration(),
             ),
             PageViewModel(
@@ -33,7 +31,6 @@ class IntroductionScreens extends StatelessWidget {
               body:
                   'Find the quote of the day and take a breather. Goals you make yourself and magic goals per day, achieve them all',
               image: buildImage("lib/images/meditate.png"),
-             
               decoration: getPageDecoration(),
             ),
           ],
@@ -48,7 +45,6 @@ class IntroductionScreens extends StatelessWidget {
               ),
             );
           },
-         
           scrollPhysics: const ClampingScrollPhysics(),
           showDoneButton: true,
           showNextButton: true,
@@ -73,11 +69,9 @@ class IntroductionScreens extends StatelessWidget {
     ));
   }
 
- 
   PageDecoration getPageDecoration() {
-    return PageDecoration(
+    return const PageDecoration(
       imagePadding: EdgeInsets.only(top: 120),
-
       boxDecoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
